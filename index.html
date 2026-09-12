@@ -526,7 +526,7 @@
           <p class="content has-text-justified uf-section-lead">
             <strong>GLIDE</strong> (Ground Legged Integrated Degeneration Evaluation) studies legged SLAM under slip,
             soft terrain, LiDAR geometric degeneracy, and visual observability loss. It currently includes
-            <strong>30 real-robot sequences</strong> and <strong>7 simulation sequences</strong> with synchronized
+            <strong>32 real-robot sequences</strong> and <strong>10 simulation sequences</strong> with synchronized
             LiDAR, camera, IMU, and leg proprioception. Outdoor routes provide RTK references; indoor routes provide
             ArUco endpoint references; simulation routes provide ground-truth pose.
           </p>
@@ -544,7 +544,7 @@
             </div>
             <div class="ablation-summary-card">
               <span class="ablation-card-label">Coverage</span>
-              <strong>37 sequences</strong>
+              <strong>42 sequences</strong>
               <p>Indoor, corridor, slippage, grassland, slope, stairs, wet/challenging roads, parking lots, and Isaac Sim failure cases.</p>
             </div>
           </div>
@@ -657,22 +657,23 @@
                 <tbody>
                   <tr><td rowspan="10">Real</td><td>Indoor</td><td>Indoor01–04</td><td>4</td><td>ArUco</td></tr>
                   <tr><td>Long corridor</td><td>Corridor01, CorridorRunning01</td><td>2</td><td>ArUco</td></tr>
-                  <tr><td>Indoor slippage</td><td>IndoorSlippage01</td><td>1</td><td>ArUco</td></tr>
+                  <tr><td>Indoor slippage</td><td>IndoorSlippage01–02</td><td>2</td><td>ArUco</td></tr>
                   <tr><td>Grassland</td><td>Grassland01–02</td><td>2</td><td>RTK</td></tr>
                   <tr><td>High grassland</td><td>HighGrassland01–02</td><td>2</td><td>RTK</td></tr>
                   <tr><td>Slope</td><td>Slope01–03</td><td>3</td><td>RTK</td></tr>
-                  <tr><td>Outdoor open stairs</td><td>OutdoorOpenStairs01–05</td><td>5</td><td>RTK</td></tr>
+                  <tr><td>Outdoor open stairs</td><td>OutdoorOpenStairs01–04</td><td>4</td><td>RTK</td></tr>
                   <tr><td>Challenging road</td><td>ChallengingRoad01–04</td><td>4</td><td>RTK</td></tr>
-                  <tr><td>Parking lot</td><td>ParkingLot01–04, ParkingLotRunning01</td><td>5</td><td>RTK</td></tr>
+                  <tr><td>Parking lot</td><td>ParkingLot01–04, ParkingLotRunning01, ParkingLotDark01–02</td><td>7</td><td>RTK</td></tr>
                   <tr><td>External disturbance</td><td>ExternalDisturbance01–02</td><td>2</td><td>RTK</td></tr>
-                  <tr><td rowspan="7">Sim.</td><td>External impact</td><td>ExternalImpact00</td><td>1</td><td>Simulator</td></tr>
-                  <tr><td>Conveyor-induced failure</td><td>ConveyorFailure00</td><td>1</td><td>Simulator</td></tr>
-                  <tr><td>Trap-induced fall</td><td>DropTrap00</td><td>1</td><td>Simulator</td></tr>
-                  <tr><td>Dynamic scene</td><td>DynamicScene00</td><td>1</td><td>Simulator</td></tr>
-                  <tr><td>Confined kitchen</td><td>SmallKitchen00</td><td>1</td><td>Simulator</td></tr>
-                  <tr><td>Indoor room</td><td>SmallRoom00</td><td>1</td><td>Simulator</td></tr>
-                  <tr><td>Long-term town</td><td>SmallTown00</td><td>1</td><td>Simulator</td></tr>
-                  <tr class="ablation-best-row"><td colspan="3">Total</td><td>37</td><td>—</td></tr>
+                  <tr><td rowspan="8">Sim.</td><td>External impact</td><td>ExternalImpact01</td><td>1</td><td>Simulator</td></tr>
+                  <tr><td>Conveyor-induced failure</td><td>ConveyorFailure01</td><td>1</td><td>Simulator</td></tr>
+                  <tr><td>Trap-induced fall</td><td>DropTrap01</td><td>1</td><td>Simulator</td></tr>
+                  <tr><td>Dynamic scene</td><td>DynamicScene01</td><td>1</td><td>Simulator</td></tr>
+                  <tr><td>Indoor environment</td><td>SmallRoom01, SmallKitchen01</td><td>2</td><td>Simulator</td></tr>
+                  <tr><td>Town environment</td><td>SmallTown01–02</td><td>2</td><td>Simulator</td></tr>
+                  <tr><td>Maze walking</td><td>MazeWalking01</td><td>1</td><td>Simulator</td></tr>
+                  <tr><td>Conveyor full operation</td><td>ConveyorFull01</td><td>1</td><td>Simulator</td></tr>
+                  <tr class="ablation-best-row"><td colspan="3">Total</td><td>42</td><td>—</td></tr>
                 </tbody>
               </table>
             </div>
@@ -700,9 +701,9 @@
           <div class="uf-block">
             <h3 class="uf-subsection-title">GrandTour (quadruped LVIO)</h3>
             <p class="content has-text-justified">
-              On structured urban, snow, and industrial routes, LEGEND is competitive with strong LVIO baselines.
-              On debris-rich Arc-2, SALS limits erroneous leg corrections when kinematic residuals disagree with
-              LiDAR–IMU motion.
+              On structured urban, snow, and industrial routes, LEGEND achieves the lowest RTE on three of the four
+              reported sequences and ranks second on the debris-rich Arc-2 route. Incorporating leg constraints does
+              not compromise nominal LVIO accuracy when their reliability is scheduled online.
             </p>
             <div class="ablation-table-wrap">
               <table class="ablation-table">
@@ -718,10 +719,11 @@
                 <tbody>
                   <tr><td>FAST-LIO2</td><td>1.07</td><td>1.41</td><td>1.28</td><td>3.62</td></tr>
                   <tr><td>FAST-LIVO2</td><td>1.05</td><td>1.25</td><td>1.11</td><td>0.70</td></tr>
-                  <tr><td>Coco-LIC</td><td>0.44</td><td>0.41</td><td>0.40</td><td>1.01</td></tr>
+                  <tr><td>Voxel-SLAM</td><td>1.03</td><td>1.37</td><td>1.34</td><td>1.24</td></tr>
+                  <tr><td>Faster-LIO</td><td>1.02</td><td>1.46</td><td>1.30</td><td>2.01</td></tr>
                   <tr><td>Leg-KILO</td><td>3.09</td><td>4.12</td><td>3.26</td><td>5.80</td></tr>
-                  <tr><td>HR2-KILO</td><td>1.68</td><td>0.98</td><td>1.32</td><td>5.23</td></tr>
-                  <tr class="ablation-best-row"><td>LEGEND</td><td>1.04</td><td>1.28</td><td>1.52</td><td>2.05</td></tr>
+                  <tr><td>HR²-KILO</td><td>1.68</td><td>0.98</td><td>1.32</td><td>5.23</td></tr>
+                  <tr class="ablation-best-row"><td>LEGEND</td><td>1.00</td><td>0.69</td><td>0.95</td><td>0.97</td></tr>
                 </tbody>
               </table>
             </div>
@@ -742,8 +744,9 @@
             <h3 class="uf-subsection-title">GLIDE (degeneracy &amp; slip)</h3>
             <p class="content has-text-justified">
               LIO methods work well indoors but drift on slip, sand, and wet-road sequences. Always-on kinematic
-              constraints can still fail under multi-foot slip. Enabling SALS yields the best or near-best ATE on
-              IndoorSlippage01, ChallengingRoad03/04, Slope02, and ParkingLot01.
+              constraints can still fail under multi-foot slip. Enabling SALS yields the best or tied-best result on
+              five of eight reported sequences, improving slip, challenging-road, parking-lot, and running cases
+              without degrading nominal indoor accuracy.
             </p>
             <div class="ablation-table-wrap">
               <table class="ablation-table">
@@ -757,27 +760,28 @@
                     <th>Slope02</th>
                     <th>ChallengingRoad04</th>
                     <th>ParkingLot01</th>
+                    <th>CorridorRunning01</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr><td>Faster-LIO</td><td>0.48</td><td>0.11</td><td>0.23</td><td>0.32</td><td>0.30</td><td>0.41</td><td>0.81</td></tr>
-                  <tr><td>CT-LIO</td><td>0.05</td><td>0.04</td><td>0.21</td><td>0.31</td><td>0.32</td><td>0.38</td><td>0.59</td></tr>
-                  <tr><td>LIKO</td><td>0.03</td><td>0.31</td><td>0.31</td><td>1.57</td><td>0.33</td><td>0.46</td><td>845.27</td></tr>
-                  <tr><td>LEGEND (w/o SALS)</td><td>0.05</td><td>0.18</td><td>0.21</td><td>0.29</td><td>0.49</td><td>0.49</td><td>1.01</td></tr>
-                  <tr class="ablation-best-row"><td>LEGEND (w/ SALS)</td><td>0.05</td><td>0.03</td><td>0.21</td><td>0.28</td><td>0.31</td><td>0.33</td><td>0.51</td></tr>
+                  <tr><td>Faster-LIO</td><td>0.48</td><td>0.11</td><td>0.23</td><td>0.32</td><td>0.30</td><td>0.41</td><td>0.81</td><td>2786.90</td></tr>
+                  <tr><td>CT-LIO</td><td>0.05</td><td>0.04</td><td>0.21</td><td>0.31</td><td>0.32</td><td>0.38</td><td>0.59</td><td>8.29</td></tr>
+                  <tr><td>LIKO</td><td>0.08</td><td>0.31</td><td>0.31</td><td>1.57</td><td>0.33</td><td>0.46</td><td>845.27</td><td>3831.19</td></tr>
+                  <tr><td>LEGEND (w/o SALS)</td><td>0.05</td><td>0.18</td><td>0.21</td><td>0.29</td><td>0.49</td><td>0.49</td><td>1.01</td><td>4.90</td></tr>
+                  <tr class="ablation-best-row"><td>LEGEND (w/ SALS)</td><td>0.05</td><td>0.03</td><td>0.21</td><td>0.28</td><td>0.31</td><td>0.33</td><td>0.51</td><td>3.74</td></tr>
                 </tbody>
               </table>
             </div>
-            <p class="uf-media-caption">ATE RMSE (m, lower is better) on representative GLIDE sequences. Selected baselines shown; full table in the paper.</p>
+            <p class="uf-media-caption">Translational error (m, lower is better) on representative GLIDE sequences. ATE RMSE with continuous references; ArUco sequences use start-to-end error. Selected baselines shown; full table in the paper.</p>
             <div class="media-placeholder" style="margin-top: 1rem;">GLIDE qualitative / ablation media placeholder</div>
           </div>
 
           <div class="uf-block">
             <h3 class="uf-subsection-title">Humanoid transfer (LIKO / KILVO)</h3>
             <p class="content has-text-justified">
-              The same proprioceptive interface and SALS module transfer to bipeds. On LIKO, LEGEND(KILO) achieves
-              the lowest mean globally aligned translational APE RMSE among compared methods. On KILVO,
-              LEGEND(KILO) attains the lowest mean start-to-end error among kinematic-inertial configurations.
+              The same proprioceptive interface and SALS module transfer to bipeds. On LIKO, LEGEND(KIL) achieves
+              the lowest translational APE RMSE for each gait and the lowest mean error. On KILVO,
+              LEGEND(KILV) obtains the lowest mean start-to-end error across quadruped and humanoid subsets.
             </p>
             <div class="ablation-table-wrap">
               <table class="ablation-table">
@@ -794,13 +798,13 @@
                 </thead>
                 <tbody>
                   <tr><td>LIKO</td><td>0.91</td><td>1.98</td><td>1.80</td><td>2.15</td><td>2.45</td><td>1.86</td></tr>
-                  <tr><td>KILVO (KIL)</td><td>0.80</td><td>1.00</td><td>1.39</td><td>2.34</td><td>2.04</td><td>1.51</td></tr>
+                  <tr><td>KILVO(KIL)</td><td>0.80</td><td>1.00</td><td>1.39</td><td>2.34</td><td>2.04</td><td>1.51</td></tr>
                   <tr><td>LIO-SAM</td><td>1.36</td><td>1.22</td><td>2.20</td><td>1.02</td><td>75.44</td><td>16.25</td></tr>
-                  <tr class="ablation-best-row"><td>LEGEND (KILO)</td><td>0.71</td><td>0.77</td><td>1.36</td><td>0.59</td><td>1.41</td><td>0.97</td></tr>
+                  <tr class="ablation-best-row"><td>LEGEND(KIL)</td><td>0.71</td><td>0.77</td><td>1.36</td><td>0.59</td><td>1.41</td><td>0.97</td></tr>
                 </tbody>
               </table>
             </div>
-            <p class="uf-media-caption">LIKO localization accuracy in APE RMSE (cm). KILVO full table in the paper.</p>
+            <p class="uf-media-caption">Translational APE RMSE (cm) on the LIKO dataset. KILVO full table in the paper.</p>
             <div class="uf-media-grid" style="margin-top: 1rem;">
               <div>
                 <div class="seq-video-wrap">
@@ -826,19 +830,19 @@
                   Dense, correlated LiDAR measurements and unstable data associations challenge
                   continuous-time state estimation. LEGEND(KILV) maintains stable odometry without divergence:
                   <strong>0.31 cm</strong> E<sub>STE</sub>.
-                  Comparison (cm): LEGEND(KILV) 0.31 | KILVO(KILV) 0.93 | FAST-LIVO2 2.37.
+                  Comparison (cm): LEGEND(KILV) 0.31 | KILVO(KILV) 0.93 | FAST-LIVO2 63.61.
                 </p>
               </div>
             </div>
           </div>
 
           <div class="uf-block">
-            <h3 class="uf-subsection-title">Downstream navigation</h3>
+            <h3 class="uf-subsection-title">Qualitative navigation validation</h3>
             <p class="content has-text-justified">
-              Estimated poses are fed into a legged navigation stack on real and simulated courses with grass patches
-              and narrow passages. Navigation succeeds more reliably with full LEGEND than with exteroceptive-only
-              odometry or always-on leg constraints, indicating that online gating of leg factors matters for
-              closed-loop operation.
+              We qualitatively evaluate LEGEND as the localization input to a quadruped navigation stack in scenes
+              with rapidly moving obstacles. Accurate, temporally consistent pose estimates maintain a stable local
+              spatial representation for route planning and updates. This study evaluates downstream usability
+              qualitatively rather than comparing navigation planners.
             </p>
             <div class="media-placeholder">Navigation demo placeholder</div>
           </div>

@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+    content="LEGEND: Leg-enhanced Degeneracy-aware State Estimation in Challenging Scenarios for Legged Robots.">
+  <meta name="keywords" content="SLAM, legged robots, LiDAR, visual-inertial odometry, proprioception, slip, degeneracy, LEGEND, GLIDE">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>LEGEND | Leg-enhanced Degeneracy-aware State Estimation</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <style>
+    .legend-title span {
+      background-size: 420% 420%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 1.8s ease-in-out infinite, titleGlow 1.2s ease-in-out infinite;
+    }
+
+    .legend-title .legend-word {
+      background-image: linear-gradient(135deg, rgb(0, 70, 120) 0%, rgb(0, 100, 150) 45%, rgb(90, 170, 210) 100%);
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes titleGlow {
+      0%, 100% { filter: brightness(1) saturate(1); }
+      50% { filter: brightness(1.28) saturate(1.3); }
+    }
+
+    .section-content-wrap {
+      width: 100%;
+      max-width: min(1180px, 96vw);
+      margin: 0 auto;
+    }
+
+    .uf-section .section-title {
+      text-align: center;
+      margin-bottom: 0.85rem;
+    }
+
+    .uf-section-lead {
+      margin-bottom: 1.35rem;
+    }
+
+    .uf-block {
+      margin-top: 1.75rem;
+      padding-top: 1.75rem;
+      border-top: 1px solid rgba(0, 100, 150, 0.14);
+    }
+
+    .uf-block:first-of-type,
+    .uf-section-lead + .uf-block {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+    }
+
+    .uf-subsection-title {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: #0f4d70;
+      margin: 0 0 0.85rem;
+      text-align: left;
+    }
+
+    .uf-media-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.15rem;
+      margin: 0.5rem 0 0;
+    }
+
+    .uf-media-caption {
+      margin-top: 0.55rem;
+      margin-bottom: 0;
+      color: #204a66;
+      font-size: 0.94rem;
+      line-height: 1.45;
+      text-align: left;
+    }
+
+    .uf-media-caption strong:first-child {
+      color: #0c4667;
+    }
+
+    .uf-overview-caption {
+      text-align: center;
+    }
+
+    .teaser-figure {
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .teaser-figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+    }
+
+    .media-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 220px;
+      aspect-ratio: 16 / 9;
+      border-radius: 8px;
+      border: 1px dashed rgba(0, 100, 150, 0.35);
+      background: linear-gradient(180deg, #f4f9fc 0%, #e8f2f8 100%);
+      color: #5a7a8f;
+      font-size: 0.95rem;
+      text-align: center;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+
+    .media-placeholder.tall {
+      min-height: 280px;
+      aspect-ratio: 21 / 9;
+    }
+
+    .contrib-list {
+      margin: 0.75rem 0 0;
+      padding-left: 1.25rem;
+      color: #204a66;
+      line-height: 1.65;
+    }
+
+    .contrib-list li + li {
+      margin-top: 0.45rem;
+    }
+
+    .ablation-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.85rem;
+    }
+
+    .ablation-summary-card {
+      border: 1px solid rgba(0, 100, 150, 0.18);
+      border-radius: 10px;
+      background: #ffffff;
+      padding: 0.85rem 0.9rem;
+      text-align: left;
+    }
+
+    .ablation-card-label {
+      display: block;
+      color: #2a607f;
+      font-size: 0.82rem;
+      margin-bottom: 0.35rem;
+      font-weight: 600;
+    }
+
+    .ablation-summary-card strong {
+      display: block;
+      color: #0c4667;
+      margin-bottom: 0.35rem;
+      font-size: 1.05rem;
+    }
+
+    .ablation-summary-card p {
+      margin: 0;
+      color: #204a66;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .ablation-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: 0.75rem;
+    }
+
+    .ablation-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+    }
+
+    .ablation-table th,
+    .ablation-table td {
+      border: 1px solid rgba(0, 100, 150, 0.16);
+      padding: 0.4rem 0.45rem;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .ablation-table thead th {
+      background: #f3faff;
+      color: #1f5777;
+      font-weight: 700;
+    }
+
+    .ablation-best-row {
+      background: #eef8ff;
+      font-weight: 700;
+    }
+
+    .ablation-conclusion {
+      margin-top: 0.75rem;
+      margin-bottom: 0;
+      color: #204a66;
+    }
+
+    .scene-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 0.75rem;
+    }
+
+    .method-step-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 0.75rem;
+    }
+
+    .method-step-card {
+      border: 1px solid rgba(0, 100, 150, 0.14);
+      border-radius: 10px;
+      background: #f7fcff;
+      padding: 0.9rem 1rem;
+    }
+
+    .method-step-card h4 {
+      margin: 0 0 0.4rem;
+      color: #0f4d70;
+      font-size: 1rem;
+    }
+
+    .method-step-card p {
+      margin: 0;
+      color: #204a66;
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 900px) {
+      .uf-media-grid,
+      .method-step-grid,
+      .ablation-summary-grid,
+      .scene-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (min-width: 601px) and (max-width: 900px) {
+      .ablation-summary-grid,
+      .scene-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script src="./static/js/script.js"></script>
+</head>
+
+<body>
+
+  <nav class="navbar is-fixed-top uf-nav" role="navigation" aria-label="main navigation">
+    <div class="container is-max-desktop">
+      <div class="navbar-brand">
+        <a class="navbar-item uf-nav-home" href="#" aria-label="Home">
+          <span class="icon">
+            <i class="fas fa-home"></i>
+          </span>
+        </a>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="uf-nav-menu">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div id="uf-nav-menu" class="navbar-menu">
+        <div class="navbar-start uf-nav-links">
+          <a class="navbar-item" href="#overview">Overview</a>
+          <a class="navbar-item" href="#method">Method</a>
+          <a class="navbar-item" href="#glide">GLIDE</a>
+          <a class="navbar-item" href="#experiments">Experiments</a>
+          <a class="navbar-item" href="#BibTeX">BibTeX</a>
+        </div>
+        <div class="navbar-end uf-nav-more">
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">More Research</a>
+            <div class="navbar-dropdown is-right">
+              <a class="navbar-item" href="https://sjtuyinjie.github.io/M3DGR-website/" target="_blank" rel="noopener">
+                M3DGR (IROS 2025)
+              </a>
+              <a class="navbar-item" href="https://github.com/SJTU-ViSYS/M2DGR" target="_blank" rel="noopener">
+                M2DGR (ICRA 2022 &amp; RAL 2021)
+              </a>
+              <a class="navbar-item" href="https://github.com/SJTU-ViSYS/Ground-Fusion" target="_blank" rel="noopener">
+                Ground-Fusion (ICRA 2024)
+              </a>
+              <a class="navbar-item" href="https://github.com/sjtuyinjie/DAF" target="_blank" rel="noopener">
+                DAF (IROS 2024)
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero uf-hero">
+    <div class="hero-body uf-hero-body">
+      <div class="container hero-wide-container">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">
+              <span class="legend-title" style="font-weight: bolder;">
+                <span class="legend-word">LEGEND</span>
+              </span>
+            </h1>
+            <p class="publication-subtitle is-size-4">
+              Leg-enhanced Degeneracy-aware State Estimation in Challenging Scenarios for Legged Robots
+            </p>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Anonymous Author</span>
+            </div>
+            <p class="publication-affiliations is-size-6">
+              Affiliation TBD
+            </p>
+
+            <div class="hero-link-row">
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark" aria-disabled="true">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>Paper (soon)</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark" aria-disabled="true">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code (soon)</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#glide" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-database"></i></span>
+                  <span>GLIDE Dataset</span>
+                </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section nidar-slogan-section">
+    <div class="container is-max-desktop has-text-centered">
+      <p class="nidar-slogan">
+        <span class="s1">Degeneracy-Aware Fusion</span>&nbsp;<span class="s3">for</span>&nbsp;<span class="s4">Legged</span>&nbsp;<span class="s5">Odometry</span><span class="s-dot">.</span>
+      </p>
+      <p class="nidar-slogan-sub">
+        <span class="term-accent">IESKF frontend</span> with
+        <span class="term-emphasis">LiDAR/visual degeneracy detection</span> and
+        <span class="term-accent">Slip-Aware Leg Scheduling (SALS)</span>
+        for quadrupeds and bipeds.
+      </p>
+    </div>
+  </section>
+
+  <section class="section uf-section" id="overview">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-12 section-content-wrap content-card">
+          <figure class="image teaser-figure">
+            <div class="media-placeholder tall">Pipeline / teaser figure placeholder</div>
+          </figure>
+          <p class="uf-media-caption uf-overview-caption">
+            <strong>Overview of LEGEND.</strong>
+            An IESKF frontend fuses IMU propagation, LiDAR point-to-plane registration, visual reprojection,
+            and no-slip leg factors. A degeneracy-aware gating policy with SALS activates, reweights, or rejects
+            residuals before a short sliding-window backend refines the navigation state.
+          </p>
+
+          <div class="uf-block">
+            <h2 class="title is-3 section-title">TL;DR</h2>
+            <div class="content has-text-justified uf-section-lead">
+              <p>
+                Reliable state estimation for legged robots must survive foot slip and soft terrain that coincide
+                with LiDAR geometric degeneracy and visual observability loss. Existing systems often apply kinematic
+                constraints whenever contact is detected, while handling LiDAR and visual degeneracy separately.
+              </p>
+              <p>
+                <strong>LEGEND</strong> is a tightly-coupled legged odometry framework that integrates LiDAR/visual
+                degeneracy detection with <strong>Slip-Aware Leg Scheduling (SALS)</strong> in a single IESKF frontend,
+                so LiDAR, visual, and leg residuals are activated, reweighted, or rejected according to local
+                observability and contact reliability. We also release <strong>GLIDE</strong>, a real-robot benchmark
+                covering slip, soft terrain, and sensor degeneracy.
+              </p>
+              <ul class="contrib-list">
+                <li>
+                  <strong>LEGEND:</strong> filter–optimizer legged LVIO that fuses no-slip constraints at LiDAR rate,
+                  with online degeneracy handling and SALS on quadruped and biped platforms.
+                </li>
+                <li>
+                  <strong>GLIDE:</strong> Ground Legged Integrated Degeneration Evaluation benchmark with synchronized
+                  LiDAR, camera, IMU, and leg proprioception under grass, slip, and multi-sensor degeneracy.
+                </li>
+                <li>
+                  <strong>Evaluation:</strong> GrandTour, GLIDE, KILVO, and LIKO, compared against LIO/LVIO baselines,
+                  kinematic-inertial odometry, and SALS ablations.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section uf-section" id="method">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-12 section-content-wrap content-card">
+          <h2 class="title is-3 section-title">Method</h2>
+          <p class="content has-text-justified uf-section-lead">
+            LEGEND uses a filter–optimizer architecture. The IESKF frontend fuses IMU, LiDAR, vision, and per-foot
+            no-slip velocity observations at LiDAR rate. Leg constraints are handled entirely in the frontend so slip
+            can be detected and rejected before exteroceptive updates corrupt the state. A short sliding-window backend
+            then refines IMU preintegration and fixed LiDAR geometric factors only.
+          </p>
+
+          <div class="uf-block">
+            <h3 class="uf-subsection-title">System pipeline</h3>
+            <figure class="image teaser-figure">
+              <div class="media-placeholder tall">legend_pipeline.png placeholder</div>
+            </figure>
+            <p class="uf-media-caption uf-overview-caption">
+              For each LiDAR scan: IMU propagation → proprioceptive leg updates on the propagated state →
+              LiDAR point-to-plane iteration → optional LiDAR-gated visual residuals → backend refinement without
+              reintroducing leg factors.
+            </p>
+          </div>
+
+          <div class="uf-block">
+            <h3 class="uf-subsection-title">Core modules</h3>
+            <div class="method-step-grid">
+              <div class="method-step-card">
+                <h4>Platform-agnostic proprioception</h4>
+                <p>
+                  A shared four-foot measurement buffer with support-topology flags covers quadrupeds and bipeds.
+                  Contact gates hard-enable leg factors; continuous confidence modulates soft weights.
+                </p>
+              </div>
+              <div class="method-step-card">
+                <h4>No-slip leg factor</h4>
+                <p>
+                  Stance feet contribute 3D zero-velocity observations in the world frame. Feet with low SALS
+                  reliability weights are skipped, reducing the estimator to LIO/LVIO without changing the state.
+                </p>
+              </div>
+              <div class="method-step-card">
+                <h4>LiDAR / visual degeneracy</h4>
+                <p>
+                  Scan-level match counts and pose-information condition numbers diagnose LiDAR weakness.
+                  Visual updates are enabled when LiDAR geometry is weak and gated when it is already well conditioned.
+                </p>
+              </div>
+              <div class="method-step-card">
+                <h4>Slip-Aware Leg Scheduling (SALS)</h4>
+                <p>
+                  Per-foot slip score, IMU consistency, multi-foot consensus, and geometry weights decide whether to
+                  up-weight, down-weight, or reject no-slip factors—especially under soft terrain and multi-foot slip.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section uf-section" id="glide">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-12 section-content-wrap content-card">
+          <h2 class="title is-3 section-title">GLIDE Dataset</h2>
+          <p class="content has-text-justified uf-section-lead">
+            <strong>GLIDE</strong> (Ground Legged Integrated Degeneration Evaluation) studies legged SLAM under slip,
+            soft terrain, LiDAR geometric degeneracy, and visual observability loss. It currently includes
+            <strong>30 real-robot sequences</strong> and <strong>7 simulation sequences</strong> with synchronized
+            LiDAR, camera, IMU, and leg proprioception. Outdoor routes provide RTK references; indoor routes provide
+            ArUco endpoint references; simulation routes provide ground-truth pose.
+          </p>
+
+          <div class="ablation-summary-grid">
+            <div class="ablation-summary-card">
+              <span class="ablation-card-label">Platform</span>
+              <strong>Unitree A2 Pro</strong>
+              <p>Real-robot collection with LiDAR–IMU–camera and low-level joint/torque proprioception.</p>
+            </div>
+            <div class="ablation-summary-card">
+              <span class="ablation-card-label">Sensors</span>
+              <strong>Multi-modal sync</strong>
+              <p>Hesai JT128 LiDAR, body/LiDAR IMU, RGB camera, RTK, and ~1&nbsp;kHz proprioception.</p>
+            </div>
+            <div class="ablation-summary-card">
+              <span class="ablation-card-label">Coverage</span>
+              <strong>37 sequences</strong>
+              <p>Indoor, corridor, slippage, grassland, slope, stairs, wet/challenging roads, parking lots, and Isaac Sim failure cases.</p>
+            </div>
+          </div>
+
+          <div class="uf-block">
+            <h3 class="uf-subsection-title">Platform &amp; sensor layout</h3>
+            <figure class="image teaser-figure">
+              <div class="media-placeholder">A2 Pro platform figure placeholder</div>
+            </figure>
+            <p class="uf-media-caption uf-overview-caption">
+              Unitree A2 Pro platform and sensor layout used for real-robot data collection.
+            </p>
+          </div>
+
+          <div class="uf-block">
+            <h3 class="uf-subsection-title">Recorded streams</h3>
+            <div class="ablation-table-wrap">
+              <table class="ablation-table">
+                <thead>
+                  <tr>
+                    <th>Source</th>
+                    <th>Measurement</th>
+                    <th>Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>A2 Pro proprioception</td>
+                    <td>Joint/motor state and torque proxy</td>
+                    <td>1.0 kHz</td>
+                  </tr>
+                  <tr>
+                    <td>Body IMU</td>
+                    <td>Six-axis inertial data</td>
+                    <td>1.0 kHz</td>
+                  </tr>
+                  <tr>
+                    <td>Hesai JT128</td>
+                    <td>3-D point cloud</td>
+                    <td>10 Hz</td>
+                  </tr>
+                  <tr>
+                    <td>JT128 IMU</td>
+                    <td>Six-axis inertial data</td>
+                    <td>500 Hz</td>
+                  </tr>
+                  <tr>
+                    <td>Built-in camera</td>
+                    <td>RGB, 1920×1080</td>
+                    <td>10 Hz</td>
+                  </tr>
+                  <tr>
+                    <td>Dual-antenna RTK</td>
+                    <td>Position and heading</td>
+                    <td>10 Hz</td>
+                  </tr>
+                  <tr>
+                    <td>ArUco board</td>
+                    <td>Indoor endpoint pose</td>
+                    <td>Endpoints</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="uf-block">
+            <h3 class="uf-subsection-title">Representative scenes</h3>
+            <div class="scene-grid">
+              <div>
+                <div class="media-placeholder">Slope</div>
+                <p class="uf-media-caption"><strong>(a) Slope.</strong> Significant elevation change.</p>
+              </div>
+              <div>
+                <div class="media-placeholder">External disturbance</div>
+                <p class="uf-media-caption"><strong>(b) External disturbance.</strong> Induced perturbations.</p>
+              </div>
+              <div>
+                <div class="media-placeholder">Parking lot</div>
+                <p class="uf-media-caption"><strong>(c) Parking lot.</strong> Large outdoor open area.</p>
+              </div>
+              <div>
+                <div class="media-placeholder">Indoor slippage</div>
+                <p class="uf-media-caption"><strong>(d) Indoor slippage.</strong> Contact with slip.</p>
+              </div>
+              <div>
+                <div class="media-placeholder">High grassland</div>
+                <p class="uf-media-caption"><strong>(e) High grassland.</strong> Soft terrain / vegetation.</p>
+              </div>
+              <div>
+                <div class="media-placeholder">Wet challenging road</div>
+                <p class="uf-media-caption"><strong>(f) Wet challenging road.</strong> Low-friction outdoor route.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="uf-block">
+            <h3 class="uf-subsection-title">Sequence overview</h3>
+            <div class="ablation-table-wrap">
+              <table class="ablation-table">
+                <thead>
+                  <tr>
+                    <th>Domain</th>
+                    <th>Scene</th>
+                    <th>Sequences</th>
+                    <th>No.</th>
+                    <th>Reference</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td rowspan="10">Real</td><td>Indoor</td><td>Indoor01–04</td><td>4</td><td>ArUco</td></tr>
+                  <tr><td>Long corridor</td><td>Corridor01, CorridorRunning01</td><td>2</td><td>ArUco</td></tr>
+                  <tr><td>Indoor slippage</td><td>IndoorSlippage01</td><td>1</td><td>ArUco</td></tr>
+                  <tr><td>Grassland</td><td>Grassland01–02</td><td>2</td><td>RTK</td></tr>
+                  <tr><td>High grassland</td><td>HighGrassland01–02</td><td>2</td><td>RTK</td></tr>
+                  <tr><td>Slope</td><td>Slope01–03</td><td>3</td><td>RTK</td></tr>
+                  <tr><td>Outdoor open stairs</td><td>OutdoorOpenStairs01–05</td><td>5</td><td>RTK</td></tr>
+                  <tr><td>Challenging road</td><td>ChallengingRoad01–04</td><td>4</td><td>RTK</td></tr>
+                  <tr><td>Parking lot</td><td>ParkingLot01–04, ParkingLotRunning01</td><td>5</td><td>RTK</td></tr>
+                  <tr><td>External disturbance</td><td>ExternalDisturbance01–02</td><td>2</td><td>RTK</td></tr>
+                  <tr><td rowspan="7">Sim.</td><td>External impact</td><td>ExternalImpact00</td><td>1</td><td>Simulator</td></tr>
+                  <tr><td>Conveyor-induced failure</td><td>ConveyorFailure00</td><td>1</td><td>Simulator</td></tr>
+                  <tr><td>Trap-induced fall</td><td>DropTrap00</td><td>1</td><td>Simulator</td></tr>
+                  <tr><td>Dynamic scene</td><td>DynamicScene00</td><td>1</td><td>Simulator</td></tr>
+                  <tr><td>Confined kitchen</td><td>SmallKitchen00</td><td>1</td><td>Simulator</td></tr>
+                  <tr><td>Indoor room</td><td>SmallRoom00</td><td>1</td><td>Simulator</td></tr>
+                  <tr><td>Long-term town</td><td>SmallTown00</td><td>1</td><td>Simulator</td></tr>
+                  <tr class="ablation-best-row"><td colspan="3">Total</td><td>37</td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="ablation-conclusion">
+              The dataset will be released with calibration files, sequence metadata, and evaluation scripts upon paper acceptance.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section uf-section" id="experiments">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-12 section-content-wrap content-card">
+          <h2 class="title is-3 section-title">Experiments</h2>
+          <p class="content has-text-justified uf-section-lead">
+            We organize evaluation around three questions:
+            <strong>Q1 Accuracy</strong> — LEGEND vs. strong LVIO/LIO and always-on leg constraints;
+            <strong>Q2 Degeneracy robustness</strong> — whether SALS helps under soft terrain, slip, and weak LiDAR/vision on GLIDE;
+            <strong>Q3 Generalization</strong> — transfer from quadrupeds to humanoids on KILVO and LIKO.
+          </p>
+
+          <div class="uf-block">
+            <h3 class="uf-subsection-title">GrandTour (quadruped LVIO)</h3>
+            <p class="content has-text-justified">
+              On structured urban, snow, and industrial routes, LEGEND is competitive with strong LVIO baselines.
+              On debris-rich Arc-2, SALS limits erroneous leg corrections when kinematic residuals disagree with
+              LiDAR–IMU motion.
+            </p>
+            <div class="ablation-table-wrap">
+              <table class="ablation-table">
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>Spectacular-2</th>
+                    <th>Snowy-2</th>
+                    <th>Eigen-1</th>
+                    <th>Arc-2</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>FAST-LIO2</td><td>1.07</td><td>1.41</td><td>1.28</td><td>3.62</td></tr>
+                  <tr><td>FAST-LIVO2</td><td>1.05</td><td>1.25</td><td>1.11</td><td>0.70</td></tr>
+                  <tr><td>Coco-LIC</td><td>0.44</td><td>0.41</td><td>0.40</td><td>1.01</td></tr>
+                  <tr><td>Leg-KILO</td><td>3.09</td><td>4.12</td><td>3.26</td><td>5.80</td></tr>
+                  <tr><td>HR2-KILO</td><td>1.68</td><td>0.98</td><td>1.32</td><td>5.23</td></tr>
+                  <tr class="ablation-best-row"><td>LEGEND</td><td>1.04</td><td>1.28</td><td>1.52</td><td>2.05</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="uf-media-caption">RTE (cm, lower is better) on representative GrandTour sequences. Full comparison in the paper.</p>
+            <div class="uf-media-grid" style="margin-top: 1rem;">
+              <div>
+                <div class="media-placeholder">GrandTour qualitative placeholder</div>
+                <p class="uf-media-caption"><strong>GrandTour trajectories.</strong> Qualitative comparison placeholder.</p>
+              </div>
+              <div>
+                <div class="media-placeholder">GrandTour mapping placeholder</div>
+                <p class="uf-media-caption"><strong>Mapping / failure cases.</strong> Media placeholder.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="uf-block">
+            <h3 class="uf-subsection-title">GLIDE (degeneracy &amp; slip)</h3>
+            <p class="content has-text-justified">
+              LIO methods work well indoors but drift on slip, sand, and wet-road sequences. Always-on kinematic
+              constraints can still fail under multi-foot slip. Enabling SALS yields the best or near-best ATE on
+              IndoorSlippage01, ChallengingRoad03/04, Slope02, and ParkingLot01.
+            </p>
+            <div class="ablation-table-wrap">
+              <table class="ablation-table">
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>Indoor03</th>
+                    <th>Slippage01</th>
+                    <th>OpenStairs04</th>
+                    <th>ChallengingRoad03</th>
+                    <th>Slope02</th>
+                    <th>ChallengingRoad04</th>
+                    <th>ParkingLot01</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Faster-LIO</td><td>0.48</td><td>0.11</td><td>0.23</td><td>0.32</td><td>0.30</td><td>0.41</td><td>0.81</td></tr>
+                  <tr><td>CT-LIO</td><td>0.05</td><td>0.04</td><td>0.21</td><td>0.31</td><td>0.32</td><td>0.38</td><td>0.59</td></tr>
+                  <tr><td>LIKO</td><td>0.03</td><td>0.31</td><td>0.31</td><td>1.57</td><td>0.33</td><td>0.46</td><td>845.27</td></tr>
+                  <tr><td>LEGEND (w/o SALS)</td><td>0.05</td><td>0.18</td><td>0.21</td><td>0.29</td><td>0.49</td><td>0.49</td><td>1.01</td></tr>
+                  <tr class="ablation-best-row"><td>LEGEND (w/ SALS)</td><td>0.05</td><td>0.03</td><td>0.21</td><td>0.28</td><td>0.31</td><td>0.33</td><td>0.51</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="uf-media-caption">ATE RMSE (m, lower is better) on representative GLIDE sequences. Selected baselines shown; full table in the paper.</p>
+            <div class="media-placeholder" style="margin-top: 1rem;">GLIDE qualitative / ablation media placeholder</div>
+          </div>
+
+          <div class="uf-block">
+            <h3 class="uf-subsection-title">Humanoid transfer (LIKO / KILVO)</h3>
+            <p class="content has-text-justified">
+              The same proprioceptive interface and SALS module transfer to bipeds. On LIKO, LEGEND(KILO) achieves
+              the lowest mean globally aligned translational APE RMSE among compared methods. On KILVO,
+              LEGEND(KILO) attains the lowest mean start-to-end error among kinematic-inertial configurations.
+            </p>
+            <div class="ablation-table-wrap">
+              <table class="ablation-table">
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>Forward-backward</th>
+                    <th>Square walk</th>
+                    <th>Square walk long</th>
+                    <th>Walk in place</th>
+                    <th>Up slope</th>
+                    <th>Mean</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>LIKO</td><td>0.91</td><td>1.98</td><td>1.80</td><td>2.15</td><td>2.45</td><td>1.86</td></tr>
+                  <tr><td>KILVO (KIL)</td><td>0.80</td><td>1.00</td><td>1.39</td><td>2.34</td><td>2.04</td><td>1.51</td></tr>
+                  <tr><td>LIO-SAM</td><td>1.36</td><td>1.22</td><td>2.20</td><td>1.02</td><td>75.44</td><td>16.25</td></tr>
+                  <tr class="ablation-best-row"><td>LEGEND (KILO)</td><td>0.71</td><td>0.77</td><td>1.36</td><td>0.59</td><td>1.41</td><td>0.97</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="uf-media-caption">LIKO localization accuracy in APE RMSE (cm). KILVO full table in the paper.</p>
+            <div class="media-placeholder" style="margin-top: 1rem;">Humanoid / navigation media placeholder</div>
+          </div>
+
+          <div class="uf-block">
+            <h3 class="uf-subsection-title">Downstream navigation</h3>
+            <p class="content has-text-justified">
+              Estimated poses are fed into a legged navigation stack on real and simulated courses with grass patches
+              and narrow passages. Navigation succeeds more reliably with full LEGEND than with exteroceptive-only
+              odometry or always-on leg constraints, indicating that online gating of leg factors matters for
+              closed-loop operation.
+            </p>
+            <div class="media-placeholder">Navigation demo placeholder</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section uf-bibtex-section" id="BibTeX">
+    <div class="container is-max-desktop">
+      <div class="column is-four-fifths content-card" style="margin: 0 auto;">
+        <h2 class="title is-3 section-title">BibTeX</h2>
+        <div class="bibtex-panel">
+          <button type="button" class="bibtex-copy-button" id="bibtex-copy-button" aria-label="Copy BibTeX to clipboard">
+            <i class="fas fa-copy" aria-hidden="true"></i>
+            <span>Copy</span>
+          </button>
+          <pre class="bibtex-block" id="bibtex-block"><code>@inproceedings{legend2026,
+  author    = {Anonymous Author},
+  title     = {{LEGEND}: Leg-enhanced Degeneracy-aware State Estimation in Challenging Scenarios for Legged Robots},
+  booktitle = {Under review},
+  year      = {2026},
+}</code></pre>
+        </div>
+        <p class="uf-media-caption uf-overview-caption" style="margin-top: 1rem;">
+          Code and the GLIDE dataset will be released upon paper acceptance.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer uf-footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <a class="icon-link" href="#BibTeX" title="BibTeX">
+          <i class="fas fa-quote-right"></i>
+        </a>
+        <a class="icon-link" href="#glide" title="GLIDE Dataset">
+          <i class="fas fa-database"></i>
+        </a>
+        <a class="icon-link" href="mailto:robot_yinjie@outlook.com" title="Contact">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p class="footer-note">
+              Project page for <strong>LEGEND</strong>
+            </p>
+            <p class="footer-note is-size-7">
+              Licensed under <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var btn = document.getElementById('bibtex-copy-button');
+      var block = document.getElementById('bibtex-block');
+      if (!btn || !block) return;
+      btn.addEventListener('click', function () {
+        var text = block.textContent || '';
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () {
+            btn.querySelector('span').textContent = 'Copied';
+            setTimeout(function () {
+              btn.querySelector('span').textContent = 'Copy';
+            }, 1500);
+          });
+        }
+      });
+    })();
+  </script>
+
+</body>
+
+</html>

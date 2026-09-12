@@ -1,0 +1,971 @@
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--uf-scroll-offset);
+}
+
+body {
+  font-family: 'Noto Sans', sans-serif;
+  color: #123245;
+  background: #ffffff;
+  scroll-padding-top: var(--uf-scroll-offset);
+}
+
+.uf-nav {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(228, 235, 240, 0.85);
+  box-shadow: 0 1px 8px rgba(26, 82, 118, 0.06);
+}
+
+.uf-nav > .container {
+  display: flex;
+  align-items: stretch;
+}
+
+.uf-nav-links {
+  flex-grow: 1;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.uf-nav .navbar-item,
+.uf-nav .navbar-link {
+  font-family: 'Google Sans', sans-serif;
+  font-size: 0.92rem;
+  color: #1a5276;
+}
+
+.uf-nav .navbar-item:hover,
+.uf-nav .navbar-link:hover {
+  background: #eef4f8;
+  color: #154360;
+}
+
+.uf-nav-home .icon {
+  color: #1a5276;
+}
+
+@media screen and (min-width: 1024px) {
+  .uf-nav .navbar-menu {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .uf-nav > .container {
+    display: block;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .uf-nav .navbar-brand {
+    width: 100%;
+  }
+
+  .uf-nav .navbar-menu {
+    flex: none;
+    max-height: calc(100dvh - 3.25rem);
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid #e4ebf0;
+    box-shadow: 0 8px 24px rgba(26, 82, 118, 0.08);
+  }
+
+  .uf-nav .navbar-menu.is-active {
+    display: block;
+  }
+
+  .uf-nav-links,
+  .uf-nav .navbar-start.uf-nav-links,
+  .uf-nav .navbar-end {
+    display: block;
+    width: 100%;
+  }
+
+  .uf-nav .navbar-burger {
+    color: #1a5276;
+  }
+
+  .uf-nav .navbar-burger:hover {
+    background: #eef4f8;
+  }
+
+  .uf-nav-links {
+    flex-wrap: nowrap;
+  }
+
+  .uf-nav-links .navbar-item,
+  .uf-nav-more .navbar-dropdown .navbar-item {
+    justify-content: flex-start;
+    padding: 0.72rem 1rem;
+    border-bottom: 1px solid #edf2f6;
+    white-space: normal;
+  }
+
+  .uf-nav-more {
+    width: 100%;
+    border-top: 1px solid #dce6ee;
+  }
+
+  .uf-nav-more .navbar-item.has-dropdown {
+    display: block;
+    width: 100%;
+    padding: 0;
+  }
+
+  .uf-nav-more .navbar-link {
+    padding: 0.72rem 1rem;
+    font-weight: 700;
+    color: #0f4d70;
+    background: #f4f9fc;
+    border-bottom: 1px solid #edf2f6;
+    pointer-events: none;
+  }
+
+  .uf-nav-more .navbar-link::after {
+    display: none;
+  }
+
+  .uf-nav-more .navbar-dropdown {
+    display: block !important;
+    position: static;
+    min-width: 0;
+    width: 100%;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    background: #fafcfd;
+  }
+
+  .uf-nav-more .navbar-dropdown .navbar-item {
+    font-size: 0.88rem;
+    padding-left: 1.25rem;
+    color: #2a607f;
+  }
+}
+
+body.uf-nav-open {
+  overflow: hidden;
+}
+
+.uf-section[id],
+.uf-bibtex-section[id],
+.uf-block[id],
+.exp-subsection[id],
+.ablation-detail[id],
+.ablation-summary-grid[id] {
+  scroll-margin-top: var(--uf-scroll-offset);
+}
+
+:root {
+  --uf-nav-height: 3.5rem;
+  --uf-scroll-offset: calc(var(--uf-nav-height) + 0.5rem);
+  --uf-primary: #006496;
+  --uf-primary-deep: #014e76;
+  --uf-primary-soft: #ecf6fb;
+  --uf-accent: #e66f2f;
+  --uf-accent-soft: #fff0e6;
+  --uf-emerald: #0d8f7a;
+  --uf-text-strong: #123245;
+  --uf-text-muted: #4f6b79;
+  --uf-border-soft: rgba(0, 100, 150, 0.14);
+  --uf-shadow-soft: 0 18px 48px rgba(0, 40, 70, 0.12);
+}
+
+.uf-hero {
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.uf-hero::before,
+.uf-hero::after {
+  display: none;
+}
+
+.uf-hero-body {
+  position: relative;
+  z-index: 1;
+  padding-top: 3.5rem;
+  padding-bottom: 3.4rem;
+}
+
+.publication-title {
+    font-family: 'Google Sans', sans-serif;
+    max-width: 1400px;
+    margin: 0 auto 0.75rem auto;
+    line-height: 1.15;
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+    color: #0f2f43;
+}
+
+.publication-subtitle {
+  max-width: 980px;
+  margin: 0.35rem auto 1rem;
+  line-height: 1.35;
+  font-weight: 500;
+  color: var(--uf-text-muted);
+  text-wrap: balance;
+}
+
+.publication-subtitle .text-accent {
+  color: var(--uf-primary);
+  font-weight: 700;
+}
+
+.publication-subtitle .text-emphasis {
+  color: var(--uf-emerald);
+  font-weight: 700;
+}
+
+.content-card .content .term-accent {
+  color: var(--uf-primary);
+  font-weight: 700;
+}
+
+.content-card .content .term-emphasis {
+  color: var(--uf-emerald);
+  font-weight: 700;
+}
+
+.content-card .content .term-evidence {
+  position: relative;
+  cursor: help;
+}
+
+.content-card .content .term-evidence-link {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.15rem);
+  transform: translateX(-50%) translateY(4px);
+  white-space: nowrap;
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--uf-primary);
+  background: #ffffff;
+  border: 1px solid rgba(0, 100, 150, 0.22);
+  border-radius: 999px;
+  padding: 0.22rem 0.7rem;
+  box-shadow: 0 8px 22px rgba(8, 32, 48, 0.14);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.18s ease, visibility 0.18s ease, transform 0.18s ease;
+  z-index: 6;
+  text-decoration: none;
+}
+
+.content-card .content .term-evidence-link::before {
+  content: "";
+  position: absolute;
+  left: -0.35rem;
+  right: -0.35rem;
+  top: 100%;
+  height: 0.45rem;
+}
+
+.content-card .content .term-evidence-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: rgba(0, 100, 150, 0.22);
+}
+
+.content-card .content .term-evidence-link:hover,
+.content-card .content .term-evidence-link:focus-visible {
+  color: var(--uf-primary-deep);
+  background: var(--uf-primary-soft);
+}
+
+.content-card .content .term-evidence:hover .term-evidence-link,
+.content-card .content .term-evidence:focus-within .term-evidence-link {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.publication-affiliations {
+  margin-top: 0.35rem;
+  margin-bottom: 0.25rem;
+  color: var(--uf-text-muted);
+  line-height: 1.5;
+}
+
+.corresponding-note {
+  margin-bottom: 1.15rem;
+  color: var(--uf-text-muted);
+}
+
+.corresponding-note a {
+  color: var(--uf-primary);
+  font-weight: 600;
+}
+
+.hero-link-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 0.25rem;
+}
+
+.conference-authors {
+  letter-spacing: 0.04em;
+  color: var(--uf-primary-deep) !important;
+  opacity: 0.9;
+  margin-bottom: 1rem !important;
+}
+
+.hero .link-block .button.is-dark {
+  background: linear-gradient(135deg, #0d4967 0%, #006496 50%, #2b88b5 100%);
+  border: 0;
+  box-shadow: 0 10px 26px rgba(0, 70, 108, 0.24);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
+
+.hero .link-block .button.is-dark:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(0, 70, 108, 0.3);
+  filter: saturate(1.08);
+}
+
+.hero .link-block .button.is-dark[disabled] {
+  opacity: 0.9;
+  cursor: not-allowed;
+}
+
+.section-title {
+  color: var(--uf-primary) !important;
+  font-weight: 800 !important;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.01em;
+}
+
+.section-title-compact {
+  margin-bottom: 0 !important;
+}
+
+.content-card {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0.2rem 0;
+}
+
+.content-card .content p,
+.content-card .content li {
+  color: var(--uf-text-strong);
+}
+
+.content-card .content strong {
+  color: var(--uf-primary-deep);
+}
+
+.abstract-content a,
+.content-card .content a {
+  color: var(--uf-primary);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0, 100, 150, 0.25);
+}
+
+.abstract-content a:hover,
+.content-card .content a:hover {
+  color: var(--uf-primary-deep);
+  border-bottom-color: var(--uf-primary-deep);
+}
+
+.uf-bibtex-section .bibtex-panel {
+  position: relative;
+}
+
+.uf-bibtex-section .bibtex-copy-button {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid rgba(0, 100, 150, 0.22);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--uf-primary-deep);
+  font-family: 'Google Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.uf-bibtex-section .bibtex-copy-button:hover {
+  color: var(--uf-primary);
+  background: #f7fcff;
+  border-color: rgba(0, 100, 150, 0.35);
+  transform: translateY(-1px);
+}
+
+.uf-bibtex-section .bibtex-copy-button.is-copied {
+  color: #0f6b52;
+  background: #eefaf5;
+  border-color: rgba(15, 107, 82, 0.28);
+}
+
+.uf-bibtex-section .bibtex-block {
+  margin: 0;
+  padding: 2.65rem 1.1rem 1rem;
+  border-radius: 0;
+  background: #f4fafd;
+  border: 1px solid var(--uf-border-soft);
+  overflow-x: auto;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--uf-text-strong);
+}
+
+.uf-footer {
+  background: #ffffff;
+  border-top: 1px solid var(--uf-border-soft);
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.uf-footer .icon-link {
+  color: var(--uf-primary-deep);
+  margin: 0 0.5rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.uf-footer .icon-link:hover {
+  color: var(--uf-primary);
+  transform: translateY(-1px);
+}
+
+.uf-footer .footer-note {
+  color: var(--uf-text-muted);
+  margin-bottom: 0.35rem;
+}
+
+.publication-video,
+.bal-container-small {
+  border: 1px solid rgba(0, 100, 150, 0.16);
+  box-shadow: none;
+}
+
+.publication-video video,
+.publication-video iframe,
+.teaser-figure img {
+  box-shadow: none !important;
+}
+
+.section {
+  width: 100%;
+  padding-top: 2.65rem;
+  padding-bottom: 2.65rem;
+}
+
+.nidar-slogan-sub {
+  color: var(--uf-text-muted);
+}
+
+.uf-footer .icon-link {
+  font-size: 1.45rem;
+}
+
+.uf-footer .footer-note a {
+  color: var(--uf-primary);
+  font-weight: 600;
+}
+
+.link-block a {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.dnerf {
+  font-variant: small-caps;
+}
+
+
+.teaser .hero-body {
+  padding-top: 0;
+  padding-bottom: 3rem;
+}
+
+.teaser {
+  font-family: 'Google Sans', sans-serif;
+}
+
+
+.hero-wide-container {
+  max-width: 1500px !important;
+}
+
+.benchmark-wide-container {
+  max-width: 1500px !important;
+}
+
+.publication-banner {
+  max-height: parent;
+
+}
+
+
+
+.publication-banner video {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+  object-fit: fit;
+}
+
+.publication-header .hero-body {
+}
+
+.publication-authors {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-venue {
+    color: #555;
+    width: fit-content;
+    font-weight: bold;
+}
+
+.publication-awards {
+    color: #ff3860;
+    width: fit-content;
+    font-weight: bolder;
+}
+
+.publication-authors {
+}
+
+.publication-authors a {
+   color: hsl(204, 86%, 53%) !important;
+}
+
+.publication-authors a:hover {
+    text-decoration: underline;
+}
+
+.author-block {
+  display: inline-block;
+}
+
+.publication-banner img {
+}
+
+.publication-authors {
+  /*color: #4286f4;*/
+}
+
+.publication-video {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+
+    overflow: hidden;
+    border-radius: 10px !important;
+}
+
+.publication-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.publication-body img {
+}
+
+.results-carousel {
+  overflow: hidden;
+
+}
+
+.results-carousel .item {
+  margin: 5px;
+  overflow: hidden;
+  border: 1px solid #bbb;
+  border-radius: 10px;
+  padding: 0;
+  font-size: 0;
+}
+
+.results-carousel video {
+  margin: 0;
+}
+
+
+.interpolation-panel {
+  background: #f5f5f5;
+  border-radius: 10px;
+}
+
+.interpolation-panel .interpolation-image {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.interpolation-video-column {
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+#interpolation-image-wrapper {
+  width: 100%;
+}
+#interpolation-image-wrapper img {
+  border-radius: 5px;
+}
+
+.bal-container-small {
+  position: relative;
+  width: 100%;
+  /* use aspect ratio instead of fixed height so window width determines height and images are fully visible */
+  /* padding-bottom creates a 16:9 ratio container */
+  padding-bottom: 56.25%;
+  height: auto;
+  cursor: grab;
+  overflow: hidden;
+  border-radius: 10px;
+  margin: 5px;
+}
+
+.bal-container-big {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  cursor: grab;
+  overflow: hidden;
+}
+
+.bal-after {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.bal-before {
+  display: block;
+  position: absolute;
+  top: 0;
+  /* right: 0; */
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 15;
+  overflow: hidden;
+}
+
+.bal-before-inset {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.bal-after img,
+.bal-before img {
+  /* show whole image (letterbox if needed) instead of cropping */
+  object-fit: contain;
+  /* remove black letterbox bars; transparent lets page background show through */
+  background: transparent;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-position: 50% 50%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.bal-beforePosition {
+  background: #121212;
+  color: #fff;
+  left: 0;
+  pointer-events: none;
+  border-radius: 0.2rem;
+  padding: 2px 10px;
+}
+
+.bal-afterPosition {
+  background: #121212;
+  color: #fff;
+  right: 0;
+  pointer-events: none;
+  border-radius: 0.2rem;
+  padding: 2px 10px;
+}
+
+.beforeLabel {
+  position: absolute;
+  bottom: 0;
+  margin: 1rem;
+  font-size: 1em;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.afterLabel {
+  position: absolute;
+  bottom: 0;
+  margin: 1rem;
+  font-size: 1em;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.bal-handle {
+  height: 41px;
+  width: 41px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -20px;
+  margin-top: -21px;
+  border: 2px solid #fff;
+  border-radius: 1000px;
+  z-index: 20;
+  pointer-events: none;
+  box-shadow: 0 0 10px rgb(12, 12, 12);
+}
+
+.handle-left-arrow,
+.handle-right-arrow {
+  width: 0;
+  height: 0;
+  border: 6px inset transparent;
+  position: absolute;
+  top: 50%;
+  margin-top: -6px;
+}
+
+.handle-left-arrow {
+  border-right: 6px solid #fff;
+  left: 50%;
+  margin-left: -17px;
+}
+
+.handle-right-arrow {
+  border-left: 6px solid #fff;
+  right: 50%;
+  margin-right: -17px;
+}
+
+.bal-handle::before {
+  bottom: 50%;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgb(12, 12, 12);
+}
+
+.bal-handle::after {
+  top: 50%;
+  margin-top: 20.5px;
+  box-shadow: 0 0 5px rgb(12, 12, 12);
+}
+
+.bal-handle::before,
+.bal-handle::after {
+  content: " ";
+  display: block;
+  width: 2px;
+  background: #fff;
+  height: 9999px;
+  position: absolute;
+  left: 50%;
+  margin-left: -1.5px;
+}
+
+.title.is-3{
+  color: var(--uf-primary);
+}
+
+/* --- NIDAR section title with logo (Isaac Sim / nuScenes) --- */
+.title-with-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+/* "with [logo] Platform" kept on one line, wraps as a unit after the main title text */
+.title-sub-line {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  gap: 0;
+}
+.title-sub-line::before {
+  content: "with\00a0";
+  font-size: 0.8em;
+  font-weight: 700;
+  color: #0b6fa4;
+}
+
+.title-with-logo .subtitle-with {
+  font-size: 0.8em;
+  font-weight: 700;
+  color: #0b6fa4;
+  white-space: nowrap;
+}
+
+.section-logo {
+  height: 28px;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+/* logo wrapper inside the h2 title */
+.logo-before {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  margin: 0 2px 0 6px;
+}
+
+/* zero-shot icon in comparison header */
+.zeroshot-icon {
+  height: 18px;
+  width: auto;
+  vertical-align: middle;
+  margin-left: 3px;
+  display: inline-block;
+}
+
+/* --- Comparison group header row (3x4 grid) --- */
+.comparison-group-header {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin: 0 0 0.25rem 0;
+  padding: 0 0.75rem;
+}
+
+.comparison-group-cell {
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #1f3b4d;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 1023px) {
+  .comparison-group-header {
+    display: none; /* avoid mismatch when Bulma stacks columns */
+  }
+}
+
+/* --- Teaser slogan section --- */
+.nidar-slogan-section {
+  padding-top: 2.5rem;
+  padding-bottom: 1.5rem;
+  background: #ffffff;
+  border-bottom: 1px solid var(--uf-border-soft);
+}
+
+.nidar-slogan {
+  font-family: 'Google Sans', sans-serif;
+  font-weight: 800;
+  font-size: clamp(13px, 2vw, 22px);
+  line-height: 1.25;
+  margin: 0 auto 0.4rem auto;
+  letter-spacing: 0.2px;
+  color: unset;
+}
+
+.nidar-slogan span {
+  display: inline;
+  padding: 0 2px;
+}
+
+/* Each word gets an explicit color; use !important to beat Bulma/title overrides */
+.nidar-slogan .s1 { color: #006496 !important; }
+.nidar-slogan .s2 { color: #3b82f6 !important; }
+.nidar-slogan .s3 { color: #8b5cf6 !important; }
+.nidar-slogan .s4 { color: #ef4444 !important; }
+.nidar-slogan .s5 {
+  background: linear-gradient(90deg, #f59e0b 0%, #10b981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent !important;
+}
+.nidar-slogan .s-dot { color: #10b981 !important; }
+
+.nidar-slogan-sub {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: clamp(11px, 1.2vw, 14px);
+  color: #555;
+  max-width: 580px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/*
+Optionally, if you want the container to shrink to the image's natural height
+instead of using a fixed 16:9 ratio, you can remove the padding-bottom rule
+above and instead set the height in script after the image loads:
+
+let img = document.querySelector('#example1 .bal-after img');
+img.onload = () => {
+  img.closest('.bal-container-small').style.height = img.offsetHeight + 'px';
+};
+
+or restructure the HTML so the image isn't absolutely positioned. The
+transparent background ensures no visible black edges even if the container
+ratio does not match the image.
+*/

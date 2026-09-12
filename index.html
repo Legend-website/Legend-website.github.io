@@ -550,6 +550,64 @@
           </div>
 
           <div class="uf-block">
+            <h3 class="uf-subsection-title">Challenging scenarios</h3>
+            <p class="content has-text-justified" style="margin-bottom: 0.85rem;">
+              Representative real-robot clips from GLIDE, covering geometric degeneracy, low-light aggressive motion,
+              soft-terrain climbing, and contact slip under external disturbance.
+            </p>
+            <div class="uf-media-grid">
+              <div>
+                <div class="seq-video-wrap">
+                  <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
+                    <source src="./static/videos/glide_corridor.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <p class="uf-media-caption">
+                  <strong>GLIDE · Corridor.</strong>
+                  Long corridor with repetitive planar structure and weak lateral constraints,
+                  stressing LiDAR geometric observability.
+                </p>
+              </div>
+              <div>
+                <div class="seq-video-wrap">
+                  <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
+                    <source src="./static/videos/glide_dark_stop.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <p class="uf-media-caption">
+                  <strong>GLIDE · Dark-room emergency stop.</strong>
+                  Low-light indoor scene with an abrupt halt, coupling visual degradation and
+                  aggressive platform dynamics.
+                </p>
+              </div>
+              <div>
+                <div class="seq-video-wrap">
+                  <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
+                    <source src="./static/videos/glide_grass_slope.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <p class="uf-media-caption">
+                  <strong>GLIDE · Grassland uphill.</strong>
+                  Soft-terrain ascent on grass, where foot sinkage and slope climb challenge
+                  both contact reliability and exteroceptive constraints.
+                </p>
+              </div>
+              <div>
+                <div class="seq-video-wrap">
+                  <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
+                    <source src="./static/videos/glide_foot_kick.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <p class="uf-media-caption">
+                  <strong>GLIDE · Foot-kick slip.</strong>
+                  External foot kick induces stance slip while contact remains active,
+                  violating the no-slip assumption used by kinematic constraints.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="uf-block">
             <h3 class="uf-subsection-title">Platform &amp; sensor layout</h3>
             <figure class="image teaser-figure">
               <div class="media-placeholder">A2 Pro platform figure placeholder</div>
@@ -608,36 +666,6 @@
                   </tr>
                 </tbody>
               </table>
-            </div>
-          </div>
-
-          <div class="uf-block">
-            <h3 class="uf-subsection-title">Representative scenes</h3>
-            <div class="scene-grid">
-              <div>
-                <div class="media-placeholder">Slope</div>
-                <p class="uf-media-caption"><strong>(a) Slope.</strong> Significant elevation change.</p>
-              </div>
-              <div>
-                <div class="media-placeholder">External disturbance</div>
-                <p class="uf-media-caption"><strong>(b) External disturbance.</strong> Induced perturbations.</p>
-              </div>
-              <div>
-                <div class="media-placeholder">Parking lot</div>
-                <p class="uf-media-caption"><strong>(c) Parking lot.</strong> Large outdoor open area.</p>
-              </div>
-              <div>
-                <div class="media-placeholder">Indoor slippage</div>
-                <p class="uf-media-caption"><strong>(d) Indoor slippage.</strong> Contact with slip.</p>
-              </div>
-              <div>
-                <div class="media-placeholder">High grassland</div>
-                <p class="uf-media-caption"><strong>(e) High grassland.</strong> Soft terrain / vegetation.</p>
-              </div>
-              <div>
-                <div class="media-placeholder">Wet challenging road</div>
-                <p class="uf-media-caption"><strong>(f) Wet challenging road.</strong> Low-friction outdoor route.</p>
-              </div>
             </div>
           </div>
 
@@ -808,7 +836,7 @@
             <div class="uf-media-grid" style="margin-top: 1rem;">
               <div>
                 <div class="seq-video-wrap">
-                  <video class="teaser-video" controls muted loop playsinline preload="metadata">
+                  <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
                     <source src="./static/videos/h1.mp4" type="video/mp4">
                   </video>
                 </div>
@@ -821,7 +849,7 @@
               </div>
               <div>
                 <div class="seq-video-wrap">
-                  <video class="teaser-video" controls muted loop playsinline preload="metadata">
+                  <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
                     <source src="./static/videos/b2.mp4" type="video/mp4">
                   </video>
                 </div>
@@ -906,18 +934,42 @@
     (function () {
       var btn = document.getElementById('bibtex-copy-button');
       var block = document.getElementById('bibtex-block');
-      if (!btn || !block) return;
-      btn.addEventListener('click', function () {
-        var text = block.textContent || '';
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).then(function () {
-            btn.querySelector('span').textContent = 'Copied';
-            setTimeout(function () {
-              btn.querySelector('span').textContent = 'Copy';
-            }, 1500);
-          });
-        }
-      });
+      if (btn && block) {
+        btn.addEventListener('click', function () {
+          var text = block.textContent || '';
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(function () {
+              btn.querySelector('span').textContent = 'Copied';
+              setTimeout(function () {
+                btn.querySelector('span').textContent = 'Copy';
+              }, 1500);
+            });
+          }
+        });
+      }
+
+      function playVideos() {
+        document.querySelectorAll('video.teaser-video').forEach(function (video) {
+          video.muted = true;
+          video.loop = true;
+          video.playsInline = true;
+          var play = function () {
+            video.play().catch(function () {});
+          };
+          if (video.readyState >= 2) {
+            play();
+          } else {
+            video.addEventListener('loadeddata', play, { once: true });
+            video.load();
+          }
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', playVideos);
+      } else {
+        playVideos();
+      }
     })();
   </script>
 

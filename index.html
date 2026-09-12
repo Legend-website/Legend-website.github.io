@@ -136,6 +136,22 @@
       aspect-ratio: 21 / 9;
     }
 
+    .seq-video-wrap {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #0b1620;
+      line-height: 0;
+    }
+
+    .teaser-video {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+    }
+
     .contrib-list {
       margin: 0.75rem 0 0;
       padding-left: 1.25rem;
@@ -303,6 +319,7 @@
           <a class="navbar-item" href="#experiments">Experiments</a>
           <a class="navbar-item" href="#BibTeX">BibTeX</a>
         </div>
+        <!-- More Research temporarily disabled
         <div class="navbar-end uf-nav-more">
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">More Research</a>
@@ -322,6 +339,7 @@
             </div>
           </div>
         </div>
+        -->
       </div>
     </div>
   </nav>
@@ -783,7 +801,35 @@
               </table>
             </div>
             <p class="uf-media-caption">LIKO localization accuracy in APE RMSE (cm). KILVO full table in the paper.</p>
-            <div class="media-placeholder" style="margin-top: 1rem;">Humanoid / navigation media placeholder</div>
+            <div class="uf-media-grid" style="margin-top: 1rem;">
+              <div>
+                <div class="seq-video-wrap">
+                  <video class="teaser-video" controls muted loop playsinline preload="metadata">
+                    <source src="./static/videos/h1.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <p class="uf-media-caption">
+                  <strong>KILVO · Outdoor H1.</strong>
+                  Outdoor humanoid locomotion with gait-induced platform oscillations, challenging LiDAR
+                  motion compensation and scan-to-map registration. LEGEND(KILV): <strong>0.63 cm</strong> E<sub>STE</sub>.
+                  Comparison (cm): LEGEND(KILV) 0.63 | KILVO(KILV) 1.25 | Faster-LIO 1.59.
+                </p>
+              </div>
+              <div>
+                <div class="seq-video-wrap">
+                  <video class="teaser-video" controls muted loop playsinline preload="metadata">
+                    <source src="./static/videos/b2.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <p class="uf-media-caption">
+                  <strong>KILVO · Robustness B2.</strong>
+                  Dense, correlated LiDAR measurements and unstable data associations challenge
+                  continuous-time state estimation. LEGEND(KILV) maintains stable odometry without divergence:
+                  <strong>0.31 cm</strong> E<sub>STE</sub>.
+                  Comparison (cm): LEGEND(KILV) 0.31 | KILVO(KILV) 0.93 | FAST-LIVO2 2.37.
+                </p>
+              </div>
+            </div>
           </div>
 
           <div class="uf-block">

@@ -273,6 +273,26 @@
       margin-top: 0.75rem;
     }
 
+    .scene-grid-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.65rem;
+    }
+
+    .scene-grid-4 img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+    }
+
+    .scene-grid-4 figcaption {
+      margin-top: 0.35rem;
+      color: #2a607f;
+      font-size: 0.78rem;
+      text-align: center;
+    }
+
     .method-step-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -307,11 +327,15 @@
       .scene-grid {
         grid-template-columns: 1fr;
       }
+
+      .scene-grid-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     @media (min-width: 601px) and (max-width: 900px) {
       .ablation-summary-grid,
-      .scene-grid {
+      .scene-grid:not(.scene-grid-4) {
         grid-template-columns: 1fr 1fr;
       }
     }
@@ -444,13 +468,13 @@
       <div class="columns is-centered">
         <div class="column is-12 section-content-wrap content-card">
           <figure class="image teaser-figure">
-            <div class="media-placeholder tall">Pipeline / teaser figure placeholder</div>
+            <img src="./static/images/paper/legend_teaser.png" alt="LEGEND teaser: trajectory, slip comparison, and mapping under foot slip">
           </figure>
           <p class="uf-media-caption uf-overview-caption">
-            <strong>Overview of LEGEND.</strong>
-            An IESKF frontend fuses IMU propagation, LiDAR point-to-plane registration, visual reprojection,
-            and no-slip leg factors. A degeneracy-aware gating policy with SALS activates, reweights, or rejects
-            residuals before a short sliding-window backend refines the navigation state.
+            <strong>LEGEND results.</strong>
+            (a) Estimated trajectory and LiDAR map on IndoorSlippage01.
+            (b) Fixed-weight leg fusion drifts during foot slip, while SALS reweights unreliable leg constraints.
+            (c) Unscheduled leg fusion duplicates map contours; LEGEND preserves sharper geometry under slip.
           </p>
 
           <div class="uf-block">
@@ -504,7 +528,7 @@
           <div class="uf-block">
             <h3 class="uf-subsection-title">System pipeline</h3>
             <figure class="image teaser-figure">
-              <div class="media-placeholder tall">legend_pipeline.png placeholder</div>
+              <img src="./static/images/paper/legend_pipeline.png" alt="LEGEND system pipeline">
             </figure>
             <p class="uf-media-caption uf-overview-caption">
               For each LiDAR scan: IMU propagation → proprioceptive leg updates on the propagated state →
@@ -643,11 +667,39 @@
 
           <div class="uf-block">
             <h3 class="uf-subsection-title">Platform &amp; sensor layout</h3>
+            <div class="uf-media-grid">
+              <figure class="image teaser-figure">
+                <img src="./static/images/paper/a2.png" alt="Unitree A2 Pro real robot with onboard sensors">
+                <figcaption class="uf-media-caption uf-overview-caption"><strong>(a) Real robot.</strong> Hesai JT128 LiDAR, fisheye camera, RTK-GNSS, and leg proprioception.</figcaption>
+              </figure>
+              <figure class="image teaser-figure">
+                <img src="./static/images/paper/sim_a2_pad.png" alt="Matched simulated Unitree A2 in Isaac Sim">
+                <figcaption class="uf-media-caption uf-overview-caption"><strong>(b) Simulated robot.</strong> URDF-defined LiDAR, camera, and leg-encoder mounts in Isaac Sim.</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div class="uf-block">
+            <h3 class="uf-subsection-title">Representative real-robot environments</h3>
+            <div class="scene-grid scene-grid-4">
+              <figure><img src="./static/images/paper/scene_HighGrassland.png" alt="High grassland"><figcaption>(a) High grassland</figcaption></figure>
+              <figure><img src="./static/images/paper/scene_Slope.png" alt="Slope"><figcaption>(b) Slope</figcaption></figure>
+              <figure><img src="./static/images/paper/scene_IndoorSlippage.png" alt="Indoor slippage"><figcaption>(c) Indoor slippage</figcaption></figure>
+              <figure><img src="./static/images/paper/scene_ExternalDisturbance.png" alt="External disturbance"><figcaption>(d) External disturbance</figcaption></figure>
+              <figure><img src="./static/images/paper/scene_sandstone_road.png" alt="Sandstone road"><figcaption>(e) Sandstone road</figcaption></figure>
+              <figure><img src="./static/images/paper/scene_ParkingLot.png" alt="Parking lot"><figcaption>(f) Parking lot</figcaption></figure>
+              <figure><img src="./static/images/paper/scene_ChallengingRoad_wet-road.png" alt="Wet road"><figcaption>(g) Wet road</figcaption></figure>
+              <figure><img src="./static/images/paper/scene_OutdoorOpenStairs.png" alt="Outdoor stairs"><figcaption>(h) Outdoor stairs</figcaption></figure>
+            </div>
+          </div>
+
+          <div class="uf-block">
+            <h3 class="uf-subsection-title">Representative simulation scenarios</h3>
             <figure class="image teaser-figure">
-              <div class="media-placeholder">A2 Pro platform figure placeholder</div>
+              <img src="./static/images/paper/sim_scenes_small_cmp.png" alt="GLIDE simulation scenarios">
             </figure>
             <p class="uf-media-caption uf-overview-caption">
-              Unitree A2 Pro platform and sensor layout used for real-robot data collection.
+              (a) Dynamic obstacle scene, (b) town route, (c) indoor apartment, and (d) conveyor corridor in GLIDE simulation sequences.
             </p>
           </div>
 
@@ -831,6 +883,13 @@
             </table>
           </div>
           <p class="uf-media-caption">Translational error (m, ↓) on representative GLIDE sequences. Runs with error above 100&nbsp;m are marked as failed (—). Full table in the paper.</p>
+          <figure class="image teaser-figure" style="margin-top: 1.25rem;">
+            <img src="./static/images/paper/trajs.png" alt="Trajectory comparisons on KILVO and GLIDE sequences">
+          </figure>
+          <p class="uf-media-caption uf-overview-caption">
+            Trajectory comparisons on KILVO Robustness-BH2 <strong>(a)</strong>, GLIDE ParkingLotDark02 <strong>(b)</strong>, and ParkingLot01 at ~4&nbsp;m/s <strong>(c)</strong>.
+            Ground truth is shown in black; start/end markers denote the evaluation interval.
+          </p>
         </div>
       </div>
     </div>
@@ -994,7 +1053,12 @@
             Accurate, temporally consistent pose estimates maintain a stable local spatial representation for route planning and updates.
             This study evaluates downstream usability qualitatively rather than comparing navigation planners.
           </p>
-          <div class="media-placeholder">Navigation demo placeholder</div>
+          <figure class="image teaser-figure">
+            <img src="./static/images/paper/sim_scenes_small_cmp.png" alt="Dynamic obstacle navigation scene in GLIDE simulation">
+          </figure>
+          <p class="uf-media-caption uf-overview-caption">
+            Closed-loop navigation with LEGEND as the localization input on the dynamic obstacle scenario in GLIDE simulation (see also Dataset section).
+          </p>
         </div>
       </div>
     </div>

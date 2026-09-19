@@ -350,10 +350,10 @@
 
 <body>
 
-  <nav class="navbar is-fixed-top uf-nav" role="navigation" aria-label="main navigation">
+  <nav class="navbar is-fixed-top uf-nav uf-nav--over-hero" role="navigation" aria-label="main navigation">
     <div class="container is-max-desktop">
       <div class="navbar-brand">
-        <a class="navbar-item uf-nav-home" href="#" aria-label="Home">
+        <a class="navbar-item uf-nav-home" href="#top" aria-label="Home">
           <span class="icon">
             <i class="fas fa-home"></i>
           </span>
@@ -401,7 +401,29 @@
     </div>
   </nav>
 
-  <section class="hero uf-hero">
+  <section class="uf-hero-splash" id="top" aria-label="LEGEND teaser">
+    <div class="uf-hero-media">
+      <video class="uf-hero-bg-video" id="hero-carousel-video" autoplay muted playsinline preload="auto"></video>
+      <div class="uf-hero-overlay" aria-hidden="true"></div>
+    </div>
+    <div class="uf-hero-copy uf-hero-copy--title-only">
+      <div class="uf-hero-copy-inner">
+        <h1 class="title publication-title uf-hero-title">
+          <span class="legend-title" style="font-weight: bolder;">
+            <span class="legend-word">LEGEND</span>
+          </span>
+        </h1>
+        <p class="uf-hero-subtitle">
+          Leg-enhanced Degeneracy-aware State Estimation in Challenging Scenarios for Legged Robots
+        </p>
+      </div>
+      <button class="uf-scroll-indicator" type="button" aria-label="Scroll to paper details" data-scroll-target="#publication">↓</button>
+    </div>
+  </section>
+
+  <div class="uf-page-content">
+
+  <section class="hero uf-hero" id="publication">
     <div class="hero-body uf-hero-body">
       <div class="container hero-wide-container">
         <div class="columns is-centered">
@@ -409,8 +431,11 @@
             <h1 class="title is-1 publication-title">
               <span class="legend-title" style="font-weight: bolder;">
                 <span class="legend-word">LEGEND</span>
-              </span><span class="publication-title-rest">: Leg-enhanced Degeneracy-aware State Estimation in Challenging Scenarios for Legged Robots</span>
+              </span>
             </h1>
+            <p class="publication-subtitle is-size-4">
+              Leg-enhanced Degeneracy-aware State Estimation in Challenging Scenarios for Legged Robots
+            </p>
 
             <div class="is-size-5 publication-authors">
               <span class="author-block">Anonymous Author(s)</span>
@@ -680,20 +705,6 @@
           </div>
 
           <div class="uf-block">
-            <h3 class="uf-subsection-title">Representative real-robot environments</h3>
-            <div class="scene-grid scene-grid-4">
-              <figure><img src="./static/images/paper/scene_HighGrassland.png" alt="High grassland"><figcaption>(a) High grassland</figcaption></figure>
-              <figure><img src="./static/images/paper/scene_Slope.png" alt="Slope"><figcaption>(b) Slope</figcaption></figure>
-              <figure><img src="./static/images/paper/scene_IndoorSlippage.png" alt="Indoor slippage"><figcaption>(c) Indoor slippage</figcaption></figure>
-              <figure><img src="./static/images/paper/scene_ExternalDisturbance.png" alt="External disturbance"><figcaption>(d) External disturbance</figcaption></figure>
-              <figure><img src="./static/images/paper/scene_sandstone_road.png" alt="Sandstone road"><figcaption>(e) Sandstone road</figcaption></figure>
-              <figure><img src="./static/images/paper/scene_ParkingLot.png" alt="Parking lot"><figcaption>(f) Parking lot</figcaption></figure>
-              <figure><img src="./static/images/paper/scene_ChallengingRoad_wet-road.png" alt="Wet road"><figcaption>(g) Wet road</figcaption></figure>
-              <figure><img src="./static/images/paper/scene_OutdoorOpenStairs.png" alt="Outdoor stairs"><figcaption>(h) Outdoor stairs</figcaption></figure>
-            </div>
-          </div>
-
-          <div class="uf-block">
             <h3 class="uf-subsection-title">Representative simulation scenarios</h3>
             <figure class="image teaser-figure">
               <img src="./static/images/paper/sim_scenes_small_cmp.png" alt="GLIDE simulation scenarios">
@@ -809,11 +820,63 @@
           <h2 class="title is-3 section-title">GrandTour</h2>
           <p class="exp-section-subtitle">Q1 · Overall Benchmarking on public quadruped LVIO sequences</p>
           <p class="content has-text-justified exp-section-lead">
-            Table below compares LEGEND with representative LIO, LVIO, and kinematic-inertial methods on the GrandTour dataset.
             LEGEND achieves the lowest RTE on three of the four reported sequences and ranks second on the debris-rich Arc-2 route,
             showing that reliability-aware leg fusion improves rather than trades away nominal LVIO accuracy.
           </p>
-          <div class="ablation-table-wrap">
+          <div class="uf-block">
+            <h3 class="uf-subsection-title">LEGEND on GrandTour</h3>
+            <div class="uf-media-grid">
+              <div>
+                <div class="seq-video-wrap">
+                  <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
+                    <source src="./static/videos/snow.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <p class="uf-media-caption">
+                  <strong>GrandTour · SNOW-2.</strong>
+                  Fast walking on fully snow-covered terrain, with limited planar structures and small-scale loop closures.
+                  LEGEND: 0.69&nbsp;cm RTE (Rank 1st). Top-3: Ours 0.69 | HR²-KILO 0.98 | FAST-LIVO2 1.25.
+                </p>
+              </div>
+              <div>
+                <div class="seq-video-wrap">
+                  <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
+                    <source src="./static/videos/eig.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <p class="uf-media-caption">
+                  <strong>GrandTour · EIG-1.</strong>
+                  Hill-to-station descent with long walking and mixed planar/non-planar structures.
+                  LEGEND: 0.95&nbsp;cm RTE (Rank 1st). Top-3: Ours 0.95 | FAST-LIVO2 1.11 | DLIO 1.26.
+                </p>
+              </div>
+              <div>
+                <div class="seq-video-wrap">
+                  <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
+                    <source src="./static/videos/arc.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <p class="uf-media-caption">
+                  <strong>GrandTour · ARC-2.</strong>
+                  Narrow passages in a rescue training center, with limited visibility and featureless walls challenging both vision and LiDAR.
+                  LEGEND: 0.97&nbsp;cm RTE (Rank 2nd). Top-3: FAST-LIVO2 0.70 | Ours 0.97 | DLIO 1.19.
+                </p>
+              </div>
+              <div>
+                <div class="seq-video-wrap">
+                  <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
+                    <source src="./static/videos/spx.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <p class="uf-media-caption">
+                  <strong>GrandTour · SPX-2.</strong>
+                  Jungfraujoch research-station sequence with dynamic initialization, thin structures, moving objects, and loop closure.
+                  LEGEND: 1.00&nbsp;cm RTE (Rank 1st). Top-3: Ours 1.00 | Faster-LIO 1.02 | Voxel-SLAM 1.03.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="ablation-table-wrap" style="margin-top: 1.25rem;">
             <table class="ablation-table">
               <thead>
                 <tr>
@@ -857,7 +920,56 @@
             Full LEGEND attains the best or tied-best result on five of the eight reported sequences; SALS drives gains on slip-
             and degradation-focused routes, while exteroceptive gating preserves tied-best indoor accuracy.
           </p>
-          <div class="ablation-table-wrap">
+          <div class="uf-block">
+            <h3 class="uf-subsection-title">LEGEND on GLIDE</h3>
+            <div class="uf-media-grid">
+              <div>
+                <div class="seq-video-wrap">
+                  <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
+                    <source src="./static/videos/kick.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <p class="uf-media-caption">
+                  <strong>KICK · Sidewalk.</strong>
+                  Outdoor sidewalk traversal with narrow passages, vegetation boundaries, and pedestrian disturbance.
+                </p>
+              </div>
+              <div>
+                <div class="seq-video-wrap">
+                  <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
+                    <source src="./static/videos/parking.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <p class="uf-media-caption">
+                  <strong>SLIP · Indoor Loop.</strong>
+                  Indoor loop sequence with doorway transitions, low-texture walls, and repeated observations.
+                </p>
+              </div>
+              <div>
+                <div class="seq-video-wrap">
+                  <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
+                    <source src="./static/videos/slip.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <p class="uf-media-caption">
+                  <strong>PARKINGLOT · Urban Lane.</strong>
+                  Outdoor parking-lane traversal with parked vehicles, road markings, and dynamic roadside clutter.
+                </p>
+              </div>
+              <div>
+                <div class="seq-video-wrap">
+                  <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
+                    <source src="./static/videos/sandstone.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <p class="uf-media-caption">
+                  <strong>SANDSTONE · Rough Terrain.</strong>
+                  Uneven gravel-terrain sequence with loose ground, rocks, vegetation, and strong body oscillations.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="ablation-table-wrap" style="margin-top: 1.25rem;">
             <table class="ablation-table">
               <thead>
                 <tr>
@@ -883,13 +995,6 @@
             </table>
           </div>
           <p class="uf-media-caption">Translational error (m, ↓) on representative GLIDE sequences. Runs with error above 100&nbsp;m are marked as failed (—). Full table in the paper.</p>
-          <figure class="image teaser-figure" style="margin-top: 1.25rem;">
-            <img src="./static/images/paper/trajs.png" alt="Trajectory comparisons on KILVO and GLIDE sequences">
-          </figure>
-          <p class="uf-media-caption uf-overview-caption">
-            Trajectory comparisons on KILVO Robustness-BH2 <strong>(a)</strong>, GLIDE ParkingLotDark02 <strong>(b)</strong>, and ParkingLot01 at ~4&nbsp;m/s <strong>(c)</strong>.
-            Ground truth is shown in black; start/end markers denote the evaluation interval.
-          </p>
         </div>
       </div>
     </div>
@@ -902,32 +1007,10 @@
           <h2 class="title is-3 section-title">LIKO</h2>
           <p class="exp-section-subtitle">Q3 · Cross-platform validation on biped locomotion</p>
           <p class="content has-text-justified exp-section-lead">
-            On the five LIKO sequences below, LEGEND (KIL) achieves the lowest translational APE RMSE for each gait and the lowest mean error,
+            On the five LIKO sequences, LEGEND (KIL) achieves the lowest translational APE RMSE for each gait and the lowest mean error,
             indicating that the shared proprioceptive interface and biped support policy handle distinct contact phases without changing the state formulation.
           </p>
-          <div class="ablation-table-wrap">
-            <table class="ablation-table">
-              <thead>
-                <tr>
-                  <th>Method</th>
-                  <th>Forward-backward</th>
-                  <th>Square walk</th>
-                  <th>Square walk long</th>
-                  <th>Walk in place</th>
-                  <th>Up slope</th>
-                  <th>Mean</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td>LIKO</td><td>0.91</td><td>1.98</td><td>1.80</td><td>2.15</td><td>2.45</td><td>1.86</td></tr>
-                <tr><td>KILVO(KIL)</td><td>0.80</td><td>1.00</td><td>1.39</td><td>2.34</td><td>2.04</td><td>1.51</td></tr>
-                <tr><td>LIO-SAM</td><td>1.36</td><td>1.22</td><td>2.20</td><td>1.02</td><td>75.44</td><td>16.25</td></tr>
-                <tr class="ablation-best-row"><td>LEGEND (KIL)</td><td>0.71</td><td>0.77</td><td>1.36</td><td>0.59</td><td>1.41</td><td>0.97</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <p class="uf-media-caption">Translational APE RMSE (cm, ↓) on the LIKO dataset.</p>
-          <div class="uf-media-grid" style="margin-top: 1rem;">
+          <div class="uf-media-grid">
             <div>
               <div class="seq-video-wrap">
                 <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
@@ -957,6 +1040,28 @@
               </p>
             </div>
           </div>
+          <div class="ablation-table-wrap" style="margin-top: 1.25rem;">
+            <table class="ablation-table">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Forward-backward</th>
+                  <th>Square walk</th>
+                  <th>Square walk long</th>
+                  <th>Walk in place</th>
+                  <th>Up slope</th>
+                  <th>Mean</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>LIKO</td><td>0.91</td><td>1.98</td><td>1.80</td><td>2.15</td><td>2.45</td><td>1.86</td></tr>
+                <tr><td>KILVO(KIL)</td><td>0.80</td><td>1.00</td><td>1.39</td><td>2.34</td><td>2.04</td><td>1.51</td></tr>
+                <tr><td>LIO-SAM</td><td>1.36</td><td>1.22</td><td>2.20</td><td>1.02</td><td>75.44</td><td>16.25</td></tr>
+                <tr class="ablation-best-row"><td>LEGEND (KIL)</td><td>0.71</td><td>0.77</td><td>1.36</td><td>0.59</td><td>1.41</td><td>0.97</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="uf-media-caption">Translational APE RMSE (cm, ↓) on the LIKO dataset.</p>
         </div>
       </div>
     </div>
@@ -969,11 +1074,40 @@
           <h2 class="title is-3 section-title">KILVO</h2>
           <p class="exp-section-subtitle">Q3 · Cross-platform validation on the Unitree G1 humanoid benchmark</p>
           <p class="content has-text-justified exp-section-lead">
-            Table below reports the full KILVO benchmark collected on the Unitree G1 humanoid platform.
-            LEGEND (KILV) obtains the lowest mean start-to-end error and remains stable across both camera configurations and diverse motion
-            and environmental conditions, including challenging running and robustness sequences where several LVIO baselines diverge.
+            LEGEND (KILV) obtains the lowest mean start-to-end error on the full KILVO benchmark collected on the Unitree G1 humanoid platform
+            and remains stable across both camera configurations and diverse motion and environmental conditions,
+            including challenging running and robustness sequences where several LVIO baselines diverge.
           </p>
-          <div class="ablation-table-wrap kilvo-table-wrap">
+          <div class="uf-media-grid">
+            <div>
+              <div class="seq-video-wrap">
+                <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
+                  <source src="./static/videos/h1.mp4" type="video/mp4">
+                </video>
+              </div>
+              <p class="uf-media-caption">
+                <strong>KILVO · Outdoor H1.</strong>
+                Outdoor humanoid locomotion with gait-induced platform oscillations, challenging LiDAR
+                motion compensation and scan-to-map registration. LEGEND (KILV): <strong>0.63 cm</strong> E<sub>STE</sub>.
+                Comparison (cm): LEGEND (KILV) 0.63 | KILVO(KILV) 1.25 | Faster-LIO 1.59.
+              </p>
+            </div>
+            <div>
+              <div class="seq-video-wrap">
+                <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
+                  <source src="./static/videos/b2.mp4" type="video/mp4">
+                </video>
+              </div>
+              <p class="uf-media-caption">
+                <strong>KILVO · Robustness B2.</strong>
+                Dense, correlated LiDAR measurements and unstable data associations challenge
+                continuous-time state estimation. LEGEND (KILV) maintains stable odometry without divergence:
+                <strong>0.31 cm</strong> E<sub>STE</sub>.
+                Comparison (cm): LEGEND (KILV) 0.31 | KILVO(KILV) 0.93 | FAST-LIVO2 63.61.
+              </p>
+            </div>
+          </div>
+          <div class="ablation-table-wrap kilvo-table-wrap" style="margin-top: 1.25rem;">
             <table class="ablation-table kilvo-table">
               <thead>
                 <tr>
@@ -1008,35 +1142,6 @@
             </table>
           </div>
           <p class="uf-media-caption">Localization accuracy on the KILVO dataset in E<sub>STE</sub> (cm, ↓). R/H: RealSense/Hikvision camera; R<i>i</i>/H<i>i</i>: outdoor route <i>i</i>; RH<i>i</i>/BH<i>i</i>: humanoid running/robustness sequences.</p>
-          <div class="uf-media-grid" style="margin-top: 1rem;">
-            <div>
-              <div class="seq-video-wrap">
-                <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
-                  <source src="./static/videos/h1.mp4" type="video/mp4">
-                </video>
-              </div>
-              <p class="uf-media-caption">
-                <strong>KILVO · Outdoor H1.</strong>
-                Outdoor humanoid locomotion with gait-induced platform oscillations, challenging LiDAR
-                motion compensation and scan-to-map registration. LEGEND (KILV): <strong>0.63 cm</strong> E<sub>STE</sub>.
-                Comparison (cm): LEGEND (KILV) 0.63 | KILVO(KILV) 1.25 | Faster-LIO 1.59.
-              </p>
-            </div>
-            <div>
-              <div class="seq-video-wrap">
-                <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
-                  <source src="./static/videos/b2.mp4" type="video/mp4">
-                </video>
-              </div>
-              <p class="uf-media-caption">
-                <strong>KILVO · Robustness B2.</strong>
-                Dense, correlated LiDAR measurements and unstable data associations challenge
-                continuous-time state estimation. LEGEND (KILV) maintains stable odometry without divergence:
-                <strong>0.31 cm</strong> E<sub>STE</sub>.
-                Comparison (cm): LEGEND (KILV) 0.31 | KILVO(KILV) 0.93 | FAST-LIVO2 63.61.
-              </p>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -1115,6 +1220,8 @@
     </div>
   </footer>
 
+  </div>
+
   <script>
     (function () {
       var btn = document.getElementById('bibtex-copy-button');
@@ -1147,6 +1254,77 @@
             video.addEventListener('loadeddata', play, { once: true });
             video.load();
           }
+        });
+      }
+
+      var nav = document.querySelector('.uf-nav--over-hero');
+      function updateNavScroll() {
+        if (!nav) return;
+        nav.classList.toggle('is-scrolled', window.scrollY > 48);
+      }
+      window.addEventListener('scroll', updateNavScroll, { passive: true });
+      updateNavScroll();
+
+      document.querySelectorAll('[data-scroll-target]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var target = document.querySelector(btn.getAttribute('data-scroll-target'));
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+
+      var heroVideo = document.getElementById('hero-carousel-video');
+      if (heroVideo) {
+        var heroClips = [
+          { src: './static/videos/kick.mp4', duration: 16 },
+          { src: './static/videos/parking.mp4', duration: 33.267 },
+          { src: './static/videos/slip.mp4', duration: 40 },
+          { src: './static/videos/sandstone.mp4', duration: 30 }
+        ];
+        var heroIndex = 0;
+        var heroTimer = null;
+        var segmentSeconds = 15;
+
+        function clearHeroTimer() {
+          if (heroTimer) {
+            clearTimeout(heroTimer);
+            heroTimer = null;
+          }
+        }
+
+        function playHeroClip(index) {
+          var clip = heroClips[index];
+          heroIndex = index;
+          clearHeroTimer();
+          heroVideo.pause();
+          heroVideo.loop = false;
+          heroVideo.playbackRate = clip.duration / segmentSeconds;
+          heroVideo.src = clip.src;
+          heroVideo.load();
+          heroVideo.onloadedmetadata = function () {
+            if (heroVideo.duration && isFinite(heroVideo.duration)) {
+              heroVideo.playbackRate = heroVideo.duration / segmentSeconds;
+            }
+            heroVideo.play().catch(function () {});
+          };
+          heroTimer = setTimeout(function () {
+            playHeroClip((heroIndex + 1) % heroClips.length);
+          }, segmentSeconds * 1000 + 80);
+        }
+
+        heroVideo.addEventListener('ended', function () {
+          playHeroClip((heroIndex + 1) % heroClips.length);
+        });
+
+        playHeroClip(0);
+      }
+
+      var burger = document.querySelector('.navbar-burger');
+      var menu = document.getElementById('uf-nav-menu');
+      if (burger && menu) {
+        burger.addEventListener('click', function () {
+          burger.classList.toggle('is-active');
+          menu.classList.toggle('is-active');
+          document.body.classList.toggle('uf-nav-open');
         });
       }
 

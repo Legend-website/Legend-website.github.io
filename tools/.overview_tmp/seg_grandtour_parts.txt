@@ -1,0 +1,4 @@
+file '/home/yinjie/Downloads/legslam/website/legend-website.github.io/tools/.overview_tmp/seg_grandtour_p0.mp4'
+file '/home/yinjie/Downloads/legslam/website/legend-website.github.io/tools/.overview_tmp/seg_grandtour_p1.mp4'
+file '/home/yinjie/Downloads/legslam/website/legend-website.github.io/tools/.overview_tmp/seg_grandtour_p2.mp4'
+file '/home/yinjie/Downloads/legslam/website/legend-website.github.io/tools/.overview_tmp/seg_grandtour_p3.mp4'

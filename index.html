@@ -19,11 +19,10 @@
   <link rel="stylesheet" href="./static/css/index.css">
   <style>
     .legend-title span {
-      background-size: 420% 420%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      animation: gradientShift 1.8s ease-in-out infinite, titleGlow 1.2s ease-in-out infinite;
+      animation: uf-title-enter 1.4s ease-out both;
     }
 
     .legend-title .legend-word {
@@ -39,15 +38,9 @@
       -webkit-text-fill-color: var(--uf-text-muted, #5a7a8f);
     }
 
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    @keyframes titleGlow {
-      0%, 100% { filter: brightness(1) saturate(1); }
-      50% { filter: brightness(1.28) saturate(1.3); }
+    @keyframes uf-title-enter {
+      from { opacity: 0; transform: translateY(10px); filter: brightness(0.92); }
+      to { opacity: 1; transform: translateY(0); filter: brightness(1); }
     }
 
     .section-content-wrap {
@@ -144,6 +137,55 @@
       height: auto;
       border-radius: 8px;
       box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+    }
+
+    .uf-platform-demo-row {
+      display: grid;
+      grid-template-columns: minmax(140px, 20%) minmax(0, 1fr) minmax(0, 1fr);
+      gap: 1.15rem;
+      align-items: stretch;
+      margin-top: 0.5rem;
+    }
+
+    .uf-platform-col,
+    .uf-demo-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      min-width: 0;
+    }
+
+    .uf-platform-visual,
+    .uf-demo-col .seq-video-wrap {
+      flex: 1 1 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: min-content;
+    }
+
+    .uf-platform-visual {
+      background: #f4f8fb;
+      border-radius: 10px;
+      padding: 0.5rem;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+    }
+
+    .uf-platform-visual img,
+    .uf-platform-demo-row .teaser-video {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .uf-platform-caption,
+    .uf-demo-caption {
+      flex: 0 0 auto;
+      margin: 0;
+      font-size: 0.88rem;
+      line-height: 1.42;
     }
 
     .media-placeholder {
@@ -324,6 +366,16 @@
     }
 
     @media (max-width: 900px) {
+      .uf-platform-demo-row {
+        grid-template-columns: 1fr;
+      }
+
+      .uf-platform-visual,
+      .uf-demo-col .seq-video-wrap {
+        flex: none;
+        min-height: 0;
+      }
+
       .uf-media-grid,
       .method-step-grid,
       .ablation-summary-grid,
@@ -917,8 +969,8 @@
           <p class="content has-text-justified exp-section-lead">
             This study on the GLIDE dataset isolates coupled exteroceptive degeneracy and proprioceptive slip.
             Methods accurate in structured indoor scenes can drift substantially under slip, geometric degeneracy, or aggressive motion.
-            Full LEGEND attains the best or tied-best result on five of the eight reported sequences; SALS drives gains on slip-
-            and degradation-focused routes, while exteroceptive gating preserves tied-best indoor accuracy.
+            LEGEND (Full) achieves cutting-edge performance at reported precision;
+            SALS drives gains on slip- and degradation-focused routes, while exteroceptive gating preserves competitive indoor accuracy.
           </p>
           <div class="uf-block">
             <h3 class="uf-subsection-title">LEGEND on GLIDE</h3>
@@ -989,8 +1041,8 @@
                 <tr><td>CT-LIO</td><td>0.05</td><td>0.04</td><td>0.21</td><td>0.31</td><td>0.32</td><td>0.38</td><td>0.59</td><td>8.29</td></tr>
                 <tr><td>LIKO</td><td>0.08</td><td>0.31</td><td>0.31</td><td>1.57</td><td>0.33</td><td>0.46</td><td>—</td><td>—</td></tr>
                 <tr><td>Leg-KILO</td><td>50.14</td><td>6.21</td><td>0.21</td><td>5.23</td><td>3.75</td><td>12.92</td><td>41.65</td><td>17.92</td></tr>
-                <tr><td>LEGEND (w/o SALS)</td><td>0.05</td><td>0.18</td><td>0.21</td><td>0.29</td><td>0.49</td><td>0.49</td><td>1.01</td><td>4.90</td></tr>
-                <tr class="ablation-best-row"><td>LEGEND (w/ SALS)</td><td>0.05</td><td>0.03</td><td>0.21</td><td>0.28</td><td>0.31</td><td>0.33</td><td>0.51</td><td>3.74</td></tr>
+                <tr><td>LEGEND (KLVIO w/o SALS)</td><td>2.58</td><td>5.46</td><td>0.21</td><td>3.01</td><td>0.47</td><td>3.71</td><td>19.19</td><td>11.79</td></tr>
+                <tr class="ablation-best-row"><td>LEGEND (Full)</td><td>0.05</td><td>0.03</td><td>0.21</td><td>0.30</td><td>0.32</td><td>0.33</td><td>0.54</td><td>2.85</td></tr>
               </tbody>
             </table>
           </div>
@@ -1007,36 +1059,45 @@
           <h2 class="title is-3 section-title">LIKO</h2>
           <p class="exp-section-subtitle">Q3 · Cross-platform validation on biped locomotion</p>
           <p class="content has-text-justified exp-section-lead">
-            On the five LIKO sequences, LEGEND (KIL) achieves the lowest translational APE RMSE for each gait and the lowest mean error,
-            indicating that the shared proprioceptive interface and biped support policy handle distinct contact phases without changing the state formulation.
+            On the five LIKO sequences, LEGEND (KLIO) achieves the lowest translational APE RMSE in every reported gait and the lowest mean error among compared methods,
+            supporting portability of the shared proprioceptive interface across biped locomotion.
           </p>
-          <div class="uf-media-grid">
-            <div>
+          <div class="uf-platform-demo-row">
+            <div class="uf-platform-col">
+              <div class="uf-platform-visual">
+                <img src="./static/images/platforms/liko_bhr_b3.png" alt="LIKO BHR-B3 biped humanoid platform">
+              </div>
+              <figcaption class="uf-media-caption uf-platform-caption">
+                <strong>LIKO · BHR-B3 biped platform.</strong>
+                Tsinghua BHR humanoid with head-mounted LiDAR, leg encoders, and foot-wrench sensing at kilohertz rate.
+              </figcaption>
+            </div>
+            <div class="uf-demo-col">
               <div class="seq-video-wrap">
                 <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
                   <source src="./static/videos/LIKO_square_walk.mp4" type="video/mp4">
                 </video>
               </div>
-              <p class="uf-media-caption">
+              <p class="uf-media-caption uf-demo-caption">
                 <strong>LIKO · Square Walk.</strong>
                 Humanoid locomotion along a square trajectory, with repeated heading changes and
                 gait-induced oscillations challenging motion compensation and scan-to-map registration.
-                LEGEND (KIL): <strong>0.77 cm</strong> ATE RMSE.
-                Comparison (cm): LEGEND (KIL) 0.77 | KILVO(KIL) 1.00 | LIO-SAM 1.22.
+                LEGEND (KLIO): <strong>0.77 cm</strong> ATE RMSE.
+                Comparison (cm): LEGEND (KLIO) 0.77 | KILVO(KLIO) 1.00 | LIO-SAM 1.22.
               </p>
             </div>
-            <div>
+            <div class="uf-demo-col">
               <div class="seq-video-wrap">
                 <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
                   <source src="./static/videos/LIKO_up_slope.mp4" type="video/mp4">
                 </video>
               </div>
-              <p class="uf-media-caption">
+              <p class="uf-media-caption uf-demo-caption">
                 <strong>LIKO · Up Slope.</strong>
                 Humanoid locomotion on an inclined surface, with body pitch variations and rolling foot
                 contact challenging leg-kinematic constraints and consistent state estimation.
-                LEGEND (KIL): <strong>1.41 cm</strong> ATE RMSE.
-                Comparison (cm): LEGEND (KIL) 1.41 | KILVO(KIL) 2.04 | LIKO 2.45.
+                LEGEND (KLIO): <strong>1.41 cm</strong> ATE RMSE.
+                Comparison (cm): LEGEND (KLIO) 1.41 | KILVO(KLIO) 2.04 | LIKO 2.45.
               </p>
             </div>
           </div>
@@ -1055,9 +1116,9 @@
               </thead>
               <tbody>
                 <tr><td>LIKO</td><td>0.91</td><td>1.98</td><td>1.80</td><td>2.15</td><td>2.45</td><td>1.86</td></tr>
-                <tr><td>KILVO(KIL)</td><td>0.80</td><td>1.00</td><td>1.39</td><td>2.34</td><td>2.04</td><td>1.51</td></tr>
+                <tr><td>KILVO(KLIO)</td><td>0.80</td><td>1.00</td><td>1.39</td><td>2.34</td><td>2.04</td><td>1.51</td></tr>
                 <tr><td>LIO-SAM</td><td>1.36</td><td>1.22</td><td>2.20</td><td>1.02</td><td>75.44</td><td>16.25</td></tr>
-                <tr class="ablation-best-row"><td>LEGEND (KIL)</td><td>0.71</td><td>0.77</td><td>1.36</td><td>0.59</td><td>1.41</td><td>0.97</td></tr>
+                <tr class="ablation-best-row"><td>LEGEND (KLIO)</td><td>0.71</td><td>0.77</td><td>1.36</td><td>0.59</td><td>1.41</td><td>0.97</td></tr>
               </tbody>
             </table>
           </div>
@@ -1074,36 +1135,44 @@
           <h2 class="title is-3 section-title">KILVO</h2>
           <p class="exp-section-subtitle">Q3 · Cross-platform validation on the Unitree G1 humanoid benchmark</p>
           <p class="content has-text-justified exp-section-lead">
-            LEGEND (KILV) obtains the lowest mean start-to-end error on the full KILVO benchmark collected on the Unitree G1 humanoid platform
-            and remains stable across both camera configurations and diverse motion and environmental conditions,
-            including challenging running and robustness sequences where several LVIO baselines diverge.
+            LEGEND (Full) obtains the lowest mean start-to-end error among compared methods on the KILVO benchmark
+            and remains stable across camera configurations and challenging running and robustness sequences where several LVIO baselines diverge.
           </p>
-          <div class="uf-media-grid">
-            <div>
+          <div class="uf-platform-demo-row">
+            <div class="uf-platform-col">
+              <div class="uf-platform-visual">
+                <img src="./static/images/platforms/kilvo_g1.png" alt="KILVO Unitree G1 humanoid platform">
+              </div>
+              <figcaption class="uf-media-caption uf-platform-caption">
+                <strong>KILVO · Unitree G1 humanoid platform.</strong>
+                Onboard LiDAR–IMU–camera sensing with controller-provided foot states for outdoor, running, and robustness sequences.
+              </figcaption>
+            </div>
+            <div class="uf-demo-col">
               <div class="seq-video-wrap">
                 <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
                   <source src="./static/videos/h1.mp4" type="video/mp4">
                 </video>
               </div>
-              <p class="uf-media-caption">
+              <p class="uf-media-caption uf-demo-caption">
                 <strong>KILVO · Outdoor H1.</strong>
                 Outdoor humanoid locomotion with gait-induced platform oscillations, challenging LiDAR
-                motion compensation and scan-to-map registration. LEGEND (KILV): <strong>0.63 cm</strong> E<sub>STE</sub>.
-                Comparison (cm): LEGEND (KILV) 0.63 | KILVO(KILV) 1.25 | Faster-LIO 1.59.
+                motion compensation and scan-to-map registration. LEGEND (Full): <strong>0.63 cm</strong> E<sub>STE</sub>.
+                Comparison (cm): LEGEND (Full) 0.63 | KILVO 1.25 | Faster-LIO 1.59.
               </p>
             </div>
-            <div>
+            <div class="uf-demo-col">
               <div class="seq-video-wrap">
                 <video class="teaser-video" autoplay muted loop playsinline controls preload="auto">
                   <source src="./static/videos/b2.mp4" type="video/mp4">
                 </video>
               </div>
-              <p class="uf-media-caption">
+              <p class="uf-media-caption uf-demo-caption">
                 <strong>KILVO · Robustness B2.</strong>
                 Dense, correlated LiDAR measurements and unstable data associations challenge
-                continuous-time state estimation. LEGEND (KILV) maintains stable odometry without divergence:
+                continuous-time state estimation. LEGEND (Full) maintains stable odometry without divergence:
                 <strong>0.31 cm</strong> E<sub>STE</sub>.
-                Comparison (cm): LEGEND (KILV) 0.31 | KILVO(KILV) 0.93 | FAST-LIVO2 63.61.
+                Comparison (cm): LEGEND (Full) 0.31 | KILVO 0.93 | FAST-LIVO2 63.61.
               </p>
             </div>
           </div>
@@ -1131,13 +1200,13 @@
               </thead>
               <tbody>
                 <tr><td>LIKO</td><td>0.37</td><td>8.18</td><td>1.63</td><td>2.03</td><td>1.51</td><td>4.66</td><td>1.91</td><td>3.28</td><td>4.24</td><td>1.61</td><td>4.02</td><td>4.57</td><td>199.27</td><td>99.39</td><td>24.05</td></tr>
-                <tr><td>KILVO(KIL)</td><td>0.18</td><td>0.15</td><td>1.44</td><td>1.69</td><td>1.03</td><td>0.60</td><td>1.41</td><td>2.42</td><td>1.80</td><td>0.15</td><td>2.24</td><td>3.79</td><td>2.35</td><td>1.10</td><td>1.45</td></tr>
+                <tr><td>KILVO(w/o vision)</td><td>0.18</td><td>0.15</td><td>1.44</td><td>1.69</td><td>1.03</td><td>0.60</td><td>1.41</td><td>2.42</td><td>1.80</td><td>0.15</td><td>2.24</td><td>3.79</td><td>2.35</td><td>1.10</td><td>1.45</td></tr>
                 <tr><td>FAST-LIO2</td><td>0.76</td><td>8.81</td><td>0.40</td><td>2.24</td><td>2.06</td><td>3.11</td><td>1.47</td><td>2.73</td><td>7.08</td><td>1.02</td><td>1.97</td><td>5.03</td><td>145.20</td><td>120.03</td><td>21.56</td></tr>
                 <tr><td>Faster-LIO</td><td>0.39</td><td>0.31</td><td>0.83</td><td>2.13</td><td>1.19</td><td>0.66</td><td>0.21</td><td>1.59</td><td>1.80</td><td>0.25</td><td>3.83</td><td>5.42</td><td>426.48</td><td>510.65</td><td>68.27</td></tr>
                 <tr><td>R3LIVE</td><td>3.90</td><td>37.15</td><td>3.09</td><td>4.50</td><td>1.05</td><td>2.82</td><td>3.51</td><td>3.68</td><td>9.63</td><td>0.83</td><td>10.65</td><td>12.98</td><td>2986.51</td><td>3796.32</td><td>491.19</td></tr>
                 <tr><td>FAST-LIVO2</td><td>0.28</td><td>0.10</td><td>0.93</td><td>1.93</td><td>2.34</td><td>1352.78</td><td>0.13</td><td>2.28</td><td>1.51</td><td>0.91</td><td>3.38</td><td>4.76</td><td>188.31</td><td>63.61</td><td>115.95</td></tr>
-                <tr><td>KILVO(KILV)</td><td>0.31</td><td>0.05</td><td>0.30</td><td>1.60</td><td>1.03</td><td>0.05</td><td>0.57</td><td>1.25</td><td>1.20</td><td>0.54</td><td>2.23</td><td>3.73</td><td>1.30</td><td>0.93</td><td>1.08</td></tr>
-                <tr class="ablation-best-row"><td>LEGEND (KILV)</td><td>0.29</td><td>0.13</td><td>0.24</td><td>1.13</td><td>0.08</td><td>0.04</td><td>0.33</td><td>0.63</td><td>0.96</td><td>0.15</td><td>0.04</td><td>0.29</td><td>2.11</td><td>0.31</td><td>0.48</td></tr>
+                <tr><td>KILVO</td><td>0.31</td><td>0.05</td><td>0.30</td><td>1.60</td><td>1.03</td><td>0.05</td><td>0.57</td><td>1.25</td><td>1.20</td><td>0.54</td><td>2.23</td><td>3.73</td><td>1.30</td><td>0.93</td><td>1.08</td></tr>
+                <tr class="ablation-best-row"><td>LEGEND (Full)</td><td>0.29</td><td>0.13</td><td>0.24</td><td>1.13</td><td>0.08</td><td>0.04</td><td>0.33</td><td>0.63</td><td>0.96</td><td>0.15</td><td>0.04</td><td>0.29</td><td>2.11</td><td>0.31</td><td>0.48</td></tr>
               </tbody>
             </table>
           </div>
@@ -1297,6 +1366,7 @@
           clearHeroTimer();
           heroVideo.pause();
           heroVideo.loop = false;
+          heroVideo.style.opacity = '0';
           heroVideo.playbackRate = clip.duration / segmentSeconds;
           heroVideo.src = clip.src;
           heroVideo.load();
@@ -1305,6 +1375,9 @@
               heroVideo.playbackRate = heroVideo.duration / segmentSeconds;
             }
             heroVideo.play().catch(function () {});
+            requestAnimationFrame(function () {
+              heroVideo.style.opacity = '1';
+            });
           };
           heroTimer = setTimeout(function () {
             playHeroClip((heroIndex + 1) % heroClips.length);

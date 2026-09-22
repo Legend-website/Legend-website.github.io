@@ -243,6 +243,8 @@ body.uf-nav-open {
   height: 100%;
   object-fit: cover;
   object-position: center center;
+  opacity: 0;
+  transition: opacity 1s ease;
 }
 
 .uf-hero-overlay {
@@ -273,6 +275,12 @@ body.uf-nav-open {
   min-width: 0;
   max-width: min(920px, 82vw);
   text-align: left;
+  animation: uf-hero-copy-enter 1.2s ease-out both;
+}
+
+@keyframes uf-hero-copy-enter {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .uf-hero-copy--title-only .uf-scroll-indicator {
@@ -306,6 +314,7 @@ body.uf-nav-open {
   color: rgba(255, 255, 255, 0.94) !important;
   text-wrap: balance;
   text-shadow: 0 1px 10px rgba(0, 0, 0, 0.45);
+  animation: uf-hero-copy-enter 1.2s ease-out 0.35s both;
 }
 
 .uf-scroll-indicator {

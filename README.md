@@ -1,3 +1,3 @@
-# nidar-web.github.io
+# Legend-website.github.io
 
-Static project page for **NIdaR** (anonymous submission template).
+Static project page for **Legend** (anonymous submission template).
